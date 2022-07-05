@@ -23,17 +23,20 @@ public interface UserDao {
 		throw new DaoException("Method not implemented");
 	}
 
-	@Transactional(readOnly = false)
+	//@Transactional(readOnly = false)
 	public default User getUser(Integer userId) throws DaoException {
 		throw new DaoException("Method not implemented");
 	}
+	
+	//@Transactional(readOnly = false)
+	public User getUserByEmail(String email) throws DaoException;
 	
 	@Transactional(readOnly = false)
 	public default void deleteUser(Integer userId) throws DaoException{
 		throw new DaoException("Method not implemented");
 	}
 	
-	@Transactional(readOnly = false)
+	//@Transactional(readOnly = false)
 	public default List<User> getAllUsers() throws DaoException{
 		throw new DaoException("Method not implemented");
 	}

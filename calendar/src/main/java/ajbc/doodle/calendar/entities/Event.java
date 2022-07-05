@@ -37,15 +37,15 @@ public class Event {
 	private LocalDateTime ending;
 	private boolean allDay;
 	private String address;
-	private String descripton;
+	private String description;
 		
 	@Enumerated(EnumType.STRING)
 	private RepeatingOptions repeatingOptions;
 	
 	private boolean deleted;
 	
-	@JsonIgnore
-	private List<Integer> guests;
-	@JsonIgnore
-	private List<Integer> notifications;
+//	@JsonIgnore
+//	private List<Integer> guests;
+//	@JsonIgnore
+//	private List<Integer> notifications;
 }

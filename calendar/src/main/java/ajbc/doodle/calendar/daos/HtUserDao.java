@@ -36,9 +36,18 @@ public class HtUserDao implements UserDao {
 	}
 	
 	@Override
+	public User getUserByEmail(String email) throws DaoException{
+		User user = template.get(User.class, email);
+		if (user == null)
+			throw new DaoException("No user in DB with email: " + email);
+		return user;
+	}
+	
+	@Override
 	public void deleteUser(Integer userId) throws DaoException{
 		User user = getUser(userId);
 		user.setDeleted(true);
+		updateUser(user);
 	}
 	
 	@Override
