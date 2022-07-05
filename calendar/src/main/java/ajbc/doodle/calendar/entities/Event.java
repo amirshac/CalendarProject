@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ import lombok.ToString;
 @Setter
 
 @Entity
-@Table(name = "event")
+@Table(name = "events")
 public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +36,9 @@ public class Event {
 	private String address;
 	private String descripton;
 	
+	@JsonIgnore
 	private List<Integer> guests;
+	@JsonIgnore
 	private List<Integer> notifications;
 	
 	@Enumerated(EnumType.STRING)

@@ -120,15 +120,16 @@ public class PushController {
 			return;
 		}
 		counter++;
-		try {
+		//try {
 			
-			Notification notification = new Notification(counter, LocalDateTime.now(), "Test notification", "Test message");
-			sendPushMessageToAllSubscribers(this.subscriptions, new PushMessage("message: " + counter, notification.toString()));
-			System.out.println(notification);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			//TODO:Fix notification push 
+//			Notification notification = new Notification(counter, LocalDateTime.now(), "Test notification", "Test message");
+//			sendPushMessageToAllSubscribers(this.subscriptions, new PushMessage("message: " + counter, notification.toString()));
+//			System.out.println(notification);
+//		} catch (JsonProcessingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 

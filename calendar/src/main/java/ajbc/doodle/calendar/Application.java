@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
 public class Application {
 	public final static Logger logger = LoggerFactory.getLogger(Application.class);
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}

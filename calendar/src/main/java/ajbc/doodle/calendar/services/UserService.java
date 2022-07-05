@@ -6,19 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import ajbc.doodle.calendar.daos.CategoryDao;
 import ajbc.doodle.calendar.daos.DaoException;
-import ajbc.doodle.calendar.entities.Category;
+import ajbc.doodle.calendar.daos.UserDao;
+import ajbc.doodle.calendar.entities.User;
 
 
 @Service
-public class CategoryService {
+public class UserService {
 
 	@Autowired
-	@Qualifier("htCatDao")
-	CategoryDao catDao;
-
-	public List<Category> getAllCategory() throws DaoException{
-		return catDao.getAllCategory();
+	@Qualifier("HtUserDao")
+	UserDao userDao;
+	
+	public void addUser(User user) throws DaoException {
+		userDao.addUser(user);
 	}
+	
 }

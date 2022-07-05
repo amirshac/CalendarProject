@@ -25,7 +25,7 @@ public class MyAspect {
 	}
 	
 	
-	@AfterThrowing(throwing = "ex", pointcut = "execution(* ajbc.doodle.calendar.daos.ProductDao.*(..))")
+	@AfterThrowing(throwing = "ex", pointcut = "execution(* ajbc.doodle.calendar.daos.*.*(..))")
 	public void convertToDaoException(Throwable ex) throws DaoException {
 		throw new DaoException(ex);
 	}
