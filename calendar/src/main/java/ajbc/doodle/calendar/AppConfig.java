@@ -3,11 +3,9 @@ package ajbc.doodle.calendar;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import ajbc.doodle.calendar.entities.Category;
-import ajbc.doodle.calendar.entities.Product;
-import ajbc.doodle.calendar.entities.Supplier;
+
 import ajbc.doodle.calendar.entities.User;
-import ajbc.doodle.calendar.utils.SeedDB;
+
 
 import java.util.Properties;
 
@@ -45,6 +43,9 @@ public class AppConfig {
 	private String serverName;
 	@Value("${driver_class_name}")
 	private String driverClassName;
+	
+	@Value("${seed_db}")
+	public boolean seedDb;
 	
 
 	@Bean

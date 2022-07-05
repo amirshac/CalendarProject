@@ -2,6 +2,7 @@ package ajbc.doodle.calendar.utils;
 
 import java.time.LocalDate;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.entities.User;
 import ajbc.doodle.calendar.services.UserService;
+import ajbc.doodle.calendar.AppConfig;
 
 @Component
 public class SeedDB {
@@ -19,6 +21,14 @@ public class SeedDB {
 	
 	@EventListener
 	public void seedDB(ContextRefreshedEvent event) {
+		
+		boolean seedDb = false;
+		
+		if (!seedDb) {
+			System.out.println("seedDB -> Skipping database seed");
+			return;
+		}
+		
 		try {
 			seedUsersTable();
 		}catch (DaoException e) {
@@ -27,6 +37,10 @@ public class SeedDB {
 	}
 	
 	public void seedUsersTable() throws DaoException {
+		
+//		System.out.println("seedUserTables -> deleting users");
+//		userService.hardDeleteAllUsers();
+		
 		System.out.println("seeding users");
 
 		User user;

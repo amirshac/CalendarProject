@@ -1,3 +1,5 @@
+
+
 CREATE TABLE Users(
 	userId int not null IDENTITY PRIMARY KEY, 
 	firstName varchar(64) not null,
