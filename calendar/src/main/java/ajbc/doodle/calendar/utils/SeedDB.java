@@ -74,7 +74,7 @@ public class SeedDB {
 		List<Event> events = new ArrayList<>();
 		events.add( new Event(0, 1, "JohnsEvent", LocalDateTime.of(2022, 7, 6, 10, 00), LocalDateTime.of(2022, 07, 06, 10, 30), false, "address1", "desc1", RepeatingOptions.NONE, false) );
 		events.add( new Event(0, 2, "MarysEvent", LocalDateTime.of(2022, 7, 7, 11, 00), LocalDateTime.of(2022, 07, 06, 11, 30), false, "address2", "desc2", RepeatingOptions.DAILY, false) );
-		events.add( new Event(0, 3, "BillsEvent", LocalDateTime.of(2022, 7, 8, 11, 00), null, true, "address2", "desc2", RepeatingOptions.DAILY, false) );
+		events.add( new Event(0, 3, "BillsEvent", LocalDateTime.of(2022, 7, 8, 11, 00), null, true, "address3", "desc3", RepeatingOptions.WEEKLY, false) );
 		
 		events.forEach(event ->{
 			System.out.println(event);
