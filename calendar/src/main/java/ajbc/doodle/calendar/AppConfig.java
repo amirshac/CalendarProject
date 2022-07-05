@@ -44,6 +44,7 @@ public class AppConfig {
 	@Value("${driver_class_name}")
 	private String driverClassName;
 	
+	//TODO: make seed db property from file work
 	@Value("${seed_db}")
 	public boolean seedDb;
 	

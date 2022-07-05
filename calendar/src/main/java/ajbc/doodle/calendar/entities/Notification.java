@@ -25,18 +25,19 @@ import lombok.ToString;
 public class Notification {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer eventId;
+	private int notificationId;
 	
-	private Integer userId; // who the event belongs to
+	private Integer eventId; // which event the notification belongs to
 	
 	private String title;
 	private String message;
+	
 	private LocalDateTime eventTime;
 	
 	@Enumerated(EnumType.STRING)
 	private ReminderUnit reminderUnit;
 	
-	private Integer reminderQuantity;
+	private int reminderQuantity;
 	
 	private boolean deleted;
 }

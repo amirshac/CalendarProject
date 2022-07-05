@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.entities.User;
 import ajbc.doodle.calendar.services.UserService;
-import ajbc.doodle.calendar.AppConfig;
 
 @Component
 public class SeedDB {

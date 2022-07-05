@@ -28,7 +28,7 @@ public class User {
 	private int userId;
 	private String firstName;
 	private String lastName;
-	private String email; // TODO: unique email in DB
+	private String email; 
 	private LocalDate birthDate;
 	private LocalDate joinDate;
 	

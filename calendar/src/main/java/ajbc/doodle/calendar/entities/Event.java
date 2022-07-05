@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ import lombok.ToString;
 
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 
@@ -28,21 +30,22 @@ import lombok.ToString;
 public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer eventId;
+	private int eventId;
+	private int ownerId;
 	private String title;
-	private LocalDateTime start;
-	private LocalDateTime end;
+	private LocalDateTime starting;
+	private LocalDateTime ending;
 	private boolean allDay;
 	private String address;
 	private String descripton;
+		
+	@Enumerated(EnumType.STRING)
+	private RepeatingOptions repeatingOptions;
+	
+	private boolean deleted;
 	
 	@JsonIgnore
 	private List<Integer> guests;
 	@JsonIgnore
 	private List<Integer> notifications;
-	
-	@Enumerated(EnumType.STRING)
-	private RepeatingOptions repeatingOptions;
-	
-	private boolean deleted;
 }
