@@ -24,7 +24,7 @@ public interface UserDao {
 	}
 
 	//@Transactional(readOnly = false)
-	public default User getUser(Integer userId) throws DaoException {
+	public default User getUserById(Integer userId) throws DaoException {
 		throw new DaoException("Method not implemented");
 	}
 	

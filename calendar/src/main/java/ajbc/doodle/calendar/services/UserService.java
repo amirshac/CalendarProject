@@ -22,6 +22,18 @@ public class UserService {
 		userDao.addUser(user);
 	}
 	
+	public List<User> getAllUsers() throws DaoException{
+		return userDao.getAllUsers();
+	}
+	
+	public User getUserById(int id) throws DaoException {
+		return userDao.getUserById(id);
+	}
+	
+	public User getUserByEmail(String email) throws DaoException{
+		return userDao.getUserByEmail(email);
+	}
+	
 	public void hardDeleteAllUsers() throws DaoException {
 		userDao.hardDeleteAllUsers();
 	}

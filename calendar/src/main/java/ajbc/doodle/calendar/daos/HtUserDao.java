@@ -28,7 +28,7 @@ public class HtUserDao implements UserDao {
 	}
 	
 	@Override
-	public User getUser(Integer userId) throws DaoException {
+	public User getUserById(Integer userId) throws DaoException {
 		User user = template.get(User.class, userId);
 		if (user == null)
 			throw new DaoException("No user in DB with ID: " + userId);
@@ -45,7 +45,7 @@ public class HtUserDao implements UserDao {
 	
 	@Override
 	public void deleteUser(Integer userId) throws DaoException{
-		User user = getUser(userId);
+		User user = getUserById(userId);
 		user.setDeleted(true);
 		updateUser(user);
 	}

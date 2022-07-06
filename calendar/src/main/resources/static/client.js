@@ -1,5 +1,5 @@
-const subscribeButton = document.getElementById('subscribeButton');
-const unsubscribeButton = document.getElementById('unsubscribeButton');
+const subscribeButton = document.getElementById('loginButton');
+const unsubscribeButton = document.getElementById('logoutButton');
 
 const notificationOutput = document.getElementById('notification');
 
