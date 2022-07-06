@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,11 +51,11 @@ public class UserController {
 	public ResponseEntity<?> addUser(@RequestBody User user) {
 		try {
 			userService.addUser(user);
-			user = userService.getUserByEmail(user.getEmail());
+			System.out.println("user added to DB " + user);
 			return ResponseEntity.status(HttpStatus.CREATED).body(user);
 			
 		} catch (DaoException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorMessage("Failed to add user to DB", e.getMessage()));
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ErrorMessage("Failed to add user to DB", e.getMessage()));
 		}
 	}
 	
