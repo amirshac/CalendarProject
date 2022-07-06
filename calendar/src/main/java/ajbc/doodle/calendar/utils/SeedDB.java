@@ -12,9 +12,12 @@ import org.springframework.stereotype.Component;
 
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.entities.Event;
+import ajbc.doodle.calendar.entities.Notification;
+import ajbc.doodle.calendar.entities.ReminderUnit;
 import ajbc.doodle.calendar.entities.RepeatingOptions;
 import ajbc.doodle.calendar.entities.User;
 import ajbc.doodle.calendar.services.EventService;
+import ajbc.doodle.calendar.services.NotificationService;
 import ajbc.doodle.calendar.services.UserService;
 
 @Component
@@ -24,11 +27,13 @@ public class SeedDB {
 	private UserService userService;
 	@Autowired
 	private EventService eventService;
+	@Autowired
+	private NotificationService notificationService;
 	
 	@EventListener
 	public void seedDB(ContextRefreshedEvent event) {
 		
-		boolean seedDb = false;
+		boolean seedDb = true;
 		
 		if (!seedDb) {
 			System.out.println("seedDB -> Skipping database seed");
@@ -38,6 +43,7 @@ public class SeedDB {
 		try {
 			seedUsersTable();
 			seedEventsTable();
+			seedNotificationsTable();
 		}catch (DaoException e) {
 			System.out.println(e);
 		}
@@ -86,6 +92,27 @@ public class SeedDB {
 		});
 		
 		System.out.println("events seeded");
+	}
+	
+	public void seedNotificationsTable() {
+	System.out.println("seeding notifications");
+		
+		List<Notification> notifications = new ArrayList<>();
+		notifications.add( new Notification(0, 1, "JohnsNotification", "msg1", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.MINUTES, 30, false) );
+		notifications.add( new Notification(0, 2, "MarysNotification", "msg2", LocalDateTime.of(2022, 7, 7, 11, 00), ReminderUnit.MINUTES, 30, false) );
+		notifications.add( new Notification(0, 3, "BillsNotification", "msg3", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.HOURS, 30, false) );
+
+		
+		notifications.forEach(notification ->{
+			System.out.println(notification);
+			try {
+				notificationService.addNotification(notification);
+			} catch (DaoException e) {
+				System.out.println(e);
+			}
+		});
+		
+		System.out.println("notifications seeded");
 	}
 
 

@@ -27,7 +27,7 @@ public class Notification {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int notificationId;
 	
-	private Integer eventId; // which event the notification belongs to
+	private int eventId; // which event the notification belongs to
 	
 	private String title;
 	private String message;
