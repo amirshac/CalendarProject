@@ -34,6 +34,10 @@ public class UserService {
 		return userDao.getUserByEmail(email);
 	}
 	
+	public void UpdateUser(User user) throws DaoException{
+		userDao.updateUser(user);
+	}
+	
 	public void hardDeleteAllUsers() throws DaoException {
 		userDao.hardDeleteAllUsers();
 	}

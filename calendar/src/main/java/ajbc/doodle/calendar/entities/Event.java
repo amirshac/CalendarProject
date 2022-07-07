@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -43,6 +44,9 @@ public class Event {
 	private RepeatingOptions repeatingOptions;
 	
 	private boolean deleted;
+	
+//	@ManyToMany(mappedBy = "events")
+//	private List<User> guests;
 	
 //	@JsonIgnore
 //	private List<Integer> guests;
