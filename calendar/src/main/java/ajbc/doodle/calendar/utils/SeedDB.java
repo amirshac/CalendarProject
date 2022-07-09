@@ -42,8 +42,8 @@ public class SeedDB {
 		
 		try {
 			seedUsersTable();
-			seedEventsTable();
-			seedNotificationsTable();
+		//	seedEventsTable();
+		//	seedNotificationsTable();
 		}catch (DaoException e) {
 			System.out.println(e);
 		}

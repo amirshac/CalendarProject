@@ -50,7 +50,7 @@ public class Event {
 	
 	private boolean deleted;
 	
-	@OneToMany(mappedBy = "eventId", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+	@OneToMany(mappedBy = "eventId", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	private List<Notification> notifications;
 	
 	
