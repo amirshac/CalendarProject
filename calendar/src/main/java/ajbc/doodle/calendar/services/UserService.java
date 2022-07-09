@@ -34,7 +34,7 @@ public class UserService {
 		return userDao.getUserByEmail(email);
 	}
 	
-	public void UpdateUser(User user) throws DaoException{
+	public void updateUser(User user) throws DaoException{
 		userDao.updateUser(user);
 	}
 	

@@ -88,7 +88,7 @@ public class SeedDB {
 		
 		
 		
-		userService.UpdateUser(user);
+		userService.updateUser(user);
 		
 		System.out.println("users seeded");
 	}

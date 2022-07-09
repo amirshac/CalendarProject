@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,5 +59,19 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ErrorMessage("Failed to add user to DB", e.getMessage()));
 		}
 	}
+	
+	// UPDATE user
+	@PutMapping(path = "/{id}")
+	public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable Integer id) {
+
+		try {
+			user.setUserId(id);
+			userService.updateUser(user);
+			user = userService.getUserById(user.getUserId());
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+		} catch (DaoException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ErrorMessage("Failed to update user with id: " + id, e.getMessage()));
+		}
+	} 
 	
 }

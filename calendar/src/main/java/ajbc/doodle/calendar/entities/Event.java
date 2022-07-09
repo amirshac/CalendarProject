@@ -59,7 +59,6 @@ public class Event {
 	private List<Notification> notifications;
 	
 	
-	
 	public void addNotification(Notification notification) {
 		
 		if (notifications == null) {
@@ -69,11 +68,5 @@ public class Event {
 		notifications.add(notification);
 	}
 	
-//	@ManyToMany(mappedBy = "events")
-//	private List<User> guests;
-	
-//	@JsonIgnore
-//	private List<Integer> guests;
-//	@JsonIgnore
-//	private List<Integer> notifications;
+	//TODO: event - guest list
 }

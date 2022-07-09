@@ -1,5 +1,5 @@
-const subscribeButton = document.getElementById('loginButton');
-const unsubscribeButton = document.getElementById('logoutButton');
+const subscribeButton = document.getElementById('subscribeButton');
+const unsubscribeButton = document.getElementById('unsubscribeButton');
 
 const notificationOutput = document.getElementById('notification');
 
@@ -85,7 +85,6 @@ function displayLastMessages() {
 				txt = txt.split("(")[1];
 				txt = txt.split(")")[0];
 				txt = txt.split(",");
-
 				for (i = 0; i < txt.length; i++) {
 					line = txt[i].split("=");
 					notificationOutput.innerHTML += "<div><span class='field'>" + line[0] + "&emsp;</span><span class='value'>" + line[1] + "</span></h4>";
