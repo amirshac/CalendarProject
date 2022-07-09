@@ -17,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -50,7 +53,9 @@ public class Event {
 	
 	private boolean deleted;
 	
-	@OneToMany(mappedBy = "eventId", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@LazyCollection(LazyCollectionOption.FALSE)
+	//@OneToMany(mappedBy = "eventId", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "eventId", cascade = { CascadeType.ALL })
 	private List<Notification> notifications;
 	
 	

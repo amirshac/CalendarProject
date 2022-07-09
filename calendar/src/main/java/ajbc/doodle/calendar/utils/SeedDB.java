@@ -33,7 +33,7 @@ public class SeedDB {
 	@EventListener
 	public void seedDB(ContextRefreshedEvent event) {
 		
-		boolean seedDb = true;
+		boolean seedDb = false;
 		
 		if (!seedDb) {
 			System.out.println("seedDB -> Skipping database seed");
