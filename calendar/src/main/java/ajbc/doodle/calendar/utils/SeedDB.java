@@ -33,7 +33,7 @@ public class SeedDB {
 	@EventListener
 	public void seedDB(ContextRefreshedEvent event) {
 		
-		boolean seedDb = false;
+		boolean seedDb = true;
 		
 		if (!seedDb) {
 			System.out.println("seedDB -> Skipping database seed");
@@ -73,12 +73,21 @@ public class SeedDB {
 		
 		User user;
 		Event event;
+		Notification notification;
 		
 		user = userService.getUserById(1);
 		
-		event = new Event(0, 1, "JohnsLinkedEvent", LocalDateTime.of(2022, 7, 6, 10, 00), LocalDateTime.of(2022, 07, 06, 10, 30), false, "address1", "desc1", RepeatingOptions.NONE, false);
+		event = new Event(0, 1, "JohnsLinkedEvent", LocalDateTime.of(2022, 7, 6, 10, 00), LocalDateTime.of(2022, 07, 06, 10, 30), false, "address1", "desc1", RepeatingOptions.NONE, false, null);
 		
+		notification = new Notification(0, 1, "JohnsNestedNotification", "not1", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.MINUTES, 30, false);
+		
+		event.addNotification(notification);
 		user.addEvent(event);
+		
+		System.out.println(user);
+		
+		
+		
 		userService.UpdateUser(user);
 		
 		System.out.println("users seeded");
@@ -88,9 +97,9 @@ public class SeedDB {
 		System.out.println("seeding events");
 		
 		List<Event> events = new ArrayList<>();
-		events.add( new Event(0, 1, "JohnsEvent", LocalDateTime.of(2022, 7, 6, 10, 00), LocalDateTime.of(2022, 07, 06, 10, 30), false, "address1", "desc1", RepeatingOptions.NONE, false) );
-		events.add( new Event(0, 2, "MarysEvent", LocalDateTime.of(2022, 7, 7, 11, 00), LocalDateTime.of(2022, 07, 06, 11, 30), false, "address2", "desc2", RepeatingOptions.DAILY, false) );
-		events.add( new Event(0, 3, "BillsEvent", LocalDateTime.of(2022, 7, 8, 11, 00), null, true, "address3", "desc3", RepeatingOptions.WEEKLY, false) );
+		events.add( new Event(0, 1, "JohnsEvent", LocalDateTime.of(2022, 7, 6, 10, 00), LocalDateTime.of(2022, 07, 06, 10, 30), false, "address1", "desc1", RepeatingOptions.NONE, false, null) );
+		events.add( new Event(0, 2, "MarysEvent", LocalDateTime.of(2022, 7, 7, 11, 00), LocalDateTime.of(2022, 07, 06, 11, 30), false, "address2", "desc2", RepeatingOptions.DAILY, false, null) );
+		events.add( new Event(0, 3, "BillsEvent", LocalDateTime.of(2022, 7, 8, 11, 00), null, true, "address3", "desc3", RepeatingOptions.WEEKLY, false, null) );
 		
 		events.forEach(event ->{
 			System.out.println(event);

@@ -40,6 +40,5 @@ public class UserService {
 	
 	public void hardDeleteAllUsers() throws DaoException {
 		userDao.hardDeleteAllUsers();
-	}
-	
+	}	
 }

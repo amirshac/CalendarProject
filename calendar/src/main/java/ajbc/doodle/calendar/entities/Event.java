@@ -1,15 +1,20 @@
 package ajbc.doodle.calendar.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -44,6 +49,20 @@ public class Event {
 	private RepeatingOptions repeatingOptions;
 	
 	private boolean deleted;
+	
+	@OneToMany(mappedBy = "eventId", fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+	private List<Notification> notifications;
+	
+	
+	
+	public void addNotification(Notification notification) {
+		
+		if (notifications == null) {
+			notifications = new ArrayList<Notification>();
+		}
+		
+		notifications.add(notification);
+	}
 	
 //	@ManyToMany(mappedBy = "events")
 //	private List<User> guests;
