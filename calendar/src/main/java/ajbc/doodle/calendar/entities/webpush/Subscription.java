@@ -17,6 +17,8 @@ public class Subscription {
     this.endpoint = endpoint;
     this.expirationTime = expirationTime;
     this.keys = keys;
+    
+    System.out.println(this);
   }
 
   public String getEndpoint() {

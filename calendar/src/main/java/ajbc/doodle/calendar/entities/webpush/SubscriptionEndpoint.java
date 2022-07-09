@@ -8,6 +8,7 @@ public class SubscriptionEndpoint {
   @JsonCreator
   public SubscriptionEndpoint(@JsonProperty("endpoint") String endpoint) {
     this.endpoint = endpoint;
+    System.out.println(this);
   }
 
   public String getEndpoint() {

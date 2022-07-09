@@ -33,6 +33,7 @@ if ("serviceWorker" in navigator) {
 async function checkSubscription() {
 	const registration = await navigator.serviceWorker.ready;
 	const subscription = await registration.pushManager.getSubscription();
+	
 	if (subscription) {
 
 		const response = await fetch("/isSubscribed", {
