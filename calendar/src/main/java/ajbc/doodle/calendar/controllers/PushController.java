@@ -97,36 +97,37 @@ public class PushController {
 		return this.serverKeys.getPublicKeyBase64();
 	}
 
+	
 	@PostMapping("/subscribe/{email}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void subscribe(@RequestBody Subscription subscription, @PathVariable(required = false) String email) {
-	
-		//if user is registered allow subscription
-		this.subscriptions.put(subscription.getEndpoint(), subscription);
-		System.out.println("Subscription added with email "+email);
-		
-		System.out.println("Subscription end point "+subscription.getEndpoint());
-
-		System.out.println("Subscription p256 "+subscription.getKeys().getP256dh());
-
-		System.out.println("Subscription Auth "+subscription.getKeys().getAuth());
 			
-		UserLoginInfo loginInfo = new UserLoginInfo(email, subscription.getEndpoint(),subscription.getKeys().getP256dh(),subscription.getKeys().getAuth());
-		
 		try {
+			UserLoginInfo loginInfo = new UserLoginInfo(email, subscription.getEndpoint(),subscription.getKeys().getP256dh(),subscription.getKeys().getAuth());
 			userService.attemptLogIn(email, loginInfo);
+			
+			this.subscriptions.put(subscription.getEndpoint(), subscription);
+			
+			System.out.println("Subscription added with email "+email);
 		} catch (DaoException e) {
 			System.out.println(e);
-		}
-		
+		}	
 		
 	}
 
 	
 	@PostMapping("/unsubscribe/{email}")
-	public void unsubscribe(@RequestBody SubscriptionEndpoint subscription, @PathVariable(required = false) String email) {
-		this.subscriptions.remove(subscription.getEndpoint());
-		System.out.println("Subscription with email "+email+" got removed!");
+	public void unsubscribe(@RequestBody SubscriptionEndpoint subscription, @PathVariable(required = false) String email) {		
+		try {
+			userService.attemptLogout(email, subscription.getEndpoint());
+			
+			this.subscriptions.remove(subscription.getEndpoint(), subscription);
+			
+			System.out.println("Subscription with email "+email+" got removed!");
+		} catch (DaoException e) {
+			System.out.println(e);
+		}	
+		
 	}
 
 

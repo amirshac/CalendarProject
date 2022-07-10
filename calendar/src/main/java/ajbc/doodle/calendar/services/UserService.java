@@ -54,9 +54,21 @@ public class UserService {
 		user.setLoginInfo(info);
 		user.setLoggedIn(true);
 		
-		System.out.println("login: user: " + user);
+
 		userDao.updateUser(user);
 	}
+	
+	public void attemptLogout(String email, String endpoint) throws DaoException {
+		System.out.println("attemptlogout email: " + email);
+		
+		User user = userDao.getUserByEmail(email);
+		
+		user.setLoginInfo(null);
+		user.setLoggedIn(false);
+		
+		userDao.updateUser(user);
+	}
+	
 	
 	// QUERIES
 	public boolean doesEmailExist(String email) {
