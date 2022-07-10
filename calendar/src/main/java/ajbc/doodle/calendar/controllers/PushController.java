@@ -25,7 +25,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +47,7 @@ import ajbc.doodle.calendar.entities.webpush.PushMessage;
 import ajbc.doodle.calendar.entities.webpush.Subscription;
 import ajbc.doodle.calendar.entities.webpush.SubscriptionEndpoint;
 import ajbc.doodle.calendar.services.CryptoService;
+import ajbc.doodle.calendar.services.UserService;
 
 
 
@@ -94,9 +95,16 @@ public class PushController {
 	@PostMapping("/subscribe/{email}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void subscribe(@RequestBody Subscription subscription, @PathVariable(required = false) String email) {
+	
 		//if user is registered allow subscription
 		this.subscriptions.put(subscription.getEndpoint(), subscription);
 		System.out.println("Subscription added with email "+email);
+		
+		System.out.println("Subscription end point "+subscription.getEndpoint());
+
+		System.out.println("Subscription p256 "+subscription.getKeys().getP256dh());
+
+		System.out.println("Subscription Auth "+subscription.getKeys().getAuth());
 	}
 
 	

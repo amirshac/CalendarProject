@@ -74,4 +74,6 @@ public class UserController {
 		}
 	} 
 	
+	// Requests from WEB server
+	
 }

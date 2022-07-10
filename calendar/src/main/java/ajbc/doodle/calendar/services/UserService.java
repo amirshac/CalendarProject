@@ -40,5 +40,16 @@ public class UserService {
 	
 	public void hardDeleteAllUsers() throws DaoException {
 		userDao.hardDeleteAllUsers();
-	}	
+	}
+	
+	// QUERIES
+	public boolean doesEmailExist(String email) {
+		try {
+			getUserByEmail(email);
+			return true;
+		}catch (DaoException e) {
+			return false;
+		}
+	}
+
 }
