@@ -26,12 +26,14 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 
@@ -41,13 +43,17 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int userId;
+	
+	@NonNull
 	private String firstName;
+	@NonNull
 	private String lastName;
-	
 	@Column(unique = true)
+	@NonNull
 	private String email; 
-	
+	@NonNull
 	private LocalDate birthDate;
+	@NonNull
 	private LocalDate joinDate;
 	
 	private boolean deleted;
@@ -60,6 +66,9 @@ public class User {
 			joinColumns = @JoinColumn(name = "userId"),
 			inverseJoinColumns = @JoinColumn(name = "eventId") )	
 	private List<Event> events;
+	
+	
+	private UserLoginInfo loginInfo;
 	
 	
 	public void addEvent(Event event) {
