@@ -5,6 +5,7 @@ CREATE TABLE Users(
 	email varchar(64) not null unique,
 	birthDate date,  
 	joinDate date,
+	loggedIn bit default 0,
 	deleted bit default 0
 );
 

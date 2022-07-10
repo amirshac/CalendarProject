@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.daos.UserDao;
 import ajbc.doodle.calendar.entities.User;
+import ajbc.doodle.calendar.entities.UserLoginInfo;
 
 
 @Service
@@ -40,6 +41,21 @@ public class UserService {
 	
 	public void hardDeleteAllUsers() throws DaoException {
 		userDao.hardDeleteAllUsers();
+	}
+	
+	public void attemptLogIn(String email, UserLoginInfo info) throws DaoException {
+		System.out.println("attemptlogin email: " + email);
+		
+		User user = userDao.getUserByEmail(email);
+		
+		info.setUserId(user.getUserId());
+		//info.setLoginId(user.getUserId());
+		
+		user.setLoginInfo(info);
+		user.setLoggedIn(true);
+		
+		System.out.println("login: user: " + user);
+		userDao.updateUser(user);
 	}
 	
 	// QUERIES

@@ -58,9 +58,9 @@ public class SeedDB {
 
 		List<User> users = new ArrayList<>();
 		
-		users.add( new User(0, "John", "Doe", "john.doe@gmail.com", LocalDate.of(2022, 01, 01), LocalDate.of(2022, 01, 01), false, null) );
-		users.add( new User(0, "Mary", "Jane", "mary.jane@gmail.com", LocalDate.of(2022, 01, 01), LocalDate.of(2022, 01, 01), false, null) );
-		users.add( new User(0, "Bill", "Gates", "bill.gates@gmail.com", LocalDate.of(2022, 01, 01), LocalDate.of(2022, 01, 01), false, null) );
+		users.add( new User("John", "Doe", "john.doe@gmail.com", LocalDate.of(2022, 01, 01), LocalDate.of(2022, 01, 01)) );
+	//	users.add( new User(0, "Mary", "Jane", "mary.jane@gmail.com", LocalDate.of(2022, 01, 01), LocalDate.of(2022, 01, 01), false, null) );
+	//	users.add( new User(0, "Bill", "Gates", "bill.gates@gmail.com", LocalDate.of(2022, 01, 01), LocalDate.of(2022, 01, 01), false, null) );
 		
 		users.forEach(user ->{
 			System.out.println(user);

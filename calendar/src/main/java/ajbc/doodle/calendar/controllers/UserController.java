@@ -46,6 +46,18 @@ public class UserController {
 		catch (DaoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorMessage("No user found" , e.getMessage()));	
 		}
+	}
+	
+	@GetMapping(path = "/email/{email}")
+	public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+		
+		try {
+			User user = userService.getUserByEmail(email);
+			return ResponseEntity.ok(user);
+		}
+		catch (DaoException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorMessage("No user found" , e.getMessage()));	
+		}
 	} 
 	
 	@PostMapping

@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
@@ -34,6 +37,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 
@@ -42,7 +46,7 @@ import lombok.ToString;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int userId;
+	private Integer userId;
 	
 	@NonNull
 	private String firstName;
@@ -56,10 +60,11 @@ public class User {
 	@NonNull
 	private LocalDate joinDate;
 	
+	private boolean loggedIn;
 	private boolean deleted;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
 	//@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
 			name = "UsersEvents", 
@@ -67,7 +72,9 @@ public class User {
 			inverseJoinColumns = @JoinColumn(name = "eventId") )	
 	private List<Event> events;
 	
-	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "loginId")
 	private UserLoginInfo loginInfo;
 	
 	

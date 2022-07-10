@@ -42,7 +42,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ajbc.doodle.calendar.Application;
 import ajbc.doodle.calendar.ServerKeys;
+import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.entities.Notification;
+import ajbc.doodle.calendar.entities.UserLoginInfo;
 import ajbc.doodle.calendar.entities.webpush.PushMessage;
 import ajbc.doodle.calendar.entities.webpush.Subscription;
 import ajbc.doodle.calendar.entities.webpush.SubscriptionEndpoint;
@@ -55,6 +57,9 @@ import ajbc.doodle.calendar.services.UserService;
 @RestController
 public class PushController {
 
+	@Autowired
+	private UserService userService;
+	
 	private final ServerKeys serverKeys;
 
 	private final CryptoService cryptoService;
@@ -105,6 +110,16 @@ public class PushController {
 		System.out.println("Subscription p256 "+subscription.getKeys().getP256dh());
 
 		System.out.println("Subscription Auth "+subscription.getKeys().getAuth());
+			
+		UserLoginInfo loginInfo = new UserLoginInfo(email, subscription.getEndpoint(),subscription.getKeys().getP256dh(),subscription.getKeys().getAuth());
+		
+		try {
+			userService.attemptLogIn(email, loginInfo);
+		} catch (DaoException e) {
+			System.out.println(e);
+		}
+		
+		
 	}
 
 	
