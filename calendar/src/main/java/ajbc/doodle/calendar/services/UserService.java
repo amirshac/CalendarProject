@@ -39,10 +39,15 @@ public class UserService {
 		userDao.updateUser(user);
 	}
 	
+	public void deleteUser(int userId) throws DaoException{
+		userDao.deleteUser(userId);
+	}
+	
 	public void hardDeleteAllUsers() throws DaoException {
 		userDao.hardDeleteAllUsers();
 	}
 	
+
 	public void attemptLogIn(String email, UserLoginInfo info) throws DaoException {
 		System.out.println("attemptlogin email: " + email);
 		
@@ -54,7 +59,6 @@ public class UserService {
 		user.setLoginInfo(info);
 		user.setLoggedIn(true);
 		
-
 		userDao.updateUser(user);
 	}
 	

@@ -29,7 +29,7 @@ public class HtEventDao implements EventDao {
 	}
 		
 	@Override
-	public Event getEvent(int eventId) throws DaoException {
+	public Event getEventById(int eventId) throws DaoException {
 		Event event = template.get(Event.class, eventId);
 		if (event == null)
 			throw new DaoException("No event in DB with ID: " + eventId);
@@ -38,21 +38,15 @@ public class HtEventDao implements EventDao {
 	
 	@Override
 	public void deleteEvent(int eventId) throws DaoException{
-		Event event = getEvent(eventId);
+		Event event = getEventById(eventId);
 		event.setDeleted(true);
 		updateEvent(event);
 	}
-//	
-//	@Override
-//	public List<User> getAllUsers() throws DaoException{
-//		DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
-//		return (List<User>) template.findByCriteria(criteria);
-//	}
-//	
-//	@Override
-//	public void hardDeleteAllUsers() throws DataAccessException, DaoException {
-//		template.deleteAll(getAllUsers());
-//	}
-//	
+	
+	@Override
+	public List<Event> getAllEvents() throws DaoException{
+		DetachedCriteria criteria = DetachedCriteria.forClass(Event.class);
+		return (List<Event>) template.findByCriteria(criteria);
+	}
 
 }

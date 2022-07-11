@@ -17,19 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.entities.ErrorMessage;
+import ajbc.doodle.calendar.entities.Event;
 import ajbc.doodle.calendar.entities.User;
+import ajbc.doodle.calendar.services.EventService;
 import ajbc.doodle.calendar.services.UserService;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/events")
+public class EventController {
 	
 	@Autowired
-	private UserService userService;
+	private EventService eventService;
 	
 	@GetMapping
-	public ResponseEntity<List<User>> getAllUsers() throws DaoException{
-		List<User> list = userService.getAllUsers();
+	public ResponseEntity<List<Event>> getAllEvents() throws DaoException{
+		List<Event> list = eventService.getAllEvents();
 		
 		if (list == null)
 			return ResponseEntity.notFound().build();
@@ -41,32 +43,19 @@ public class UserController {
 	public ResponseEntity<?> getUserById(@PathVariable int id) {
 		
 		try {
-			User user = userService.getUserById(id);
-			return ResponseEntity.ok(user);
+			Event event = eventService.getEventById(id);
+			return ResponseEntity.ok(event);
 		}
 		catch (DaoException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorMessage("No user found" , e.getMessage()));	
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorMessage("No event found" , e.getMessage()));	
 		}
 	}
-	
-	@GetMapping(path = "/email/{email}")
-	public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
 		
-		try {
-			User user = userService.getUserByEmail(email);
-			return ResponseEntity.ok(user);
-		}
-		catch (DaoException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorMessage("No user found" , e.getMessage()));	
-		}
-	} 
-	
 	@PostMapping
-	public ResponseEntity<?> addUser(@RequestBody User user) {
+	public ResponseEntity<?> addEvent(@RequestBody Event event) {
 		try {
-			userService.addUser(user);
-			System.out.println("user added to DB " + user);
-			return ResponseEntity.status(HttpStatus.CREATED).body(user);
+			eventService.addEvent(event);
+			return ResponseEntity.status(HttpStatus.CREATED).body(event);
 			
 		} catch (DaoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ErrorMessage("Failed to add user to DB", e.getMessage()));
@@ -74,28 +63,28 @@ public class UserController {
 	}
 	
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable Integer id) {
+	public ResponseEntity<?> updateEvent(@RequestBody Event event, @PathVariable Integer id) {
 
 		try {
-			user.setUserId(id);
-			userService.updateUser(user);
-			user = userService.getUserById(user.getUserId());
-			return ResponseEntity.status(HttpStatus.OK).body(user);
+			event.setEventId(id);
+			eventService.updateEvent(event);
+			event = eventService.getEventById(event.getEventId());
+			return ResponseEntity.status(HttpStatus.OK).body(event);
 		} catch (DaoException e) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ErrorMessage("Failed to update user with id: " + id, e.getMessage()));
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ErrorMessage("Failed to update event with id: " + id, e.getMessage()));
 		}
 	} 
 	
 	@DeleteMapping(path = "{id}")
-	public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
+	public ResponseEntity<?> deleteEvent(@PathVariable Integer id) {
 
 		try {
-			userService.deleteUser(id);
-			return ResponseEntity.status(HttpStatus.OK).body("User deleted");
+			eventService.deleteEvent(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Event deleted");
 		} catch (DaoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ErrorMessage("Failed to delete user with id: " + id, e.getMessage()));
 		}
-	} 
+	}
 	
-	
+	//TODO: hard deletes on entities
 }

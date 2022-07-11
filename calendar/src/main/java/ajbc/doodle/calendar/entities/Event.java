@@ -25,12 +25,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 
@@ -40,15 +43,24 @@ public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int eventId;
+	
+	@NonNull
 	private int ownerId;
+	@NonNull
 	private String title;
+	@NonNull
 	private LocalDateTime starting;
+	@NonNull
 	private LocalDateTime ending;
+	@NonNull
 	private boolean allDay;
+	@NonNull
 	private String address;
+	@NonNull
 	private String description;
-		
+
 	@Enumerated(EnumType.STRING)
+	@NonNull
 	private RepeatingOptions repeatingOptions;
 	
 	private boolean deleted;

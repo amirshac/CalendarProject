@@ -74,8 +74,7 @@ public class PushController {
 
 	private final ObjectMapper objectMapper;
 
-	// maps email addresses to communication channels (UserLoginInfo class) for push
-	// notifications
+	// maps email addresses to communication channels (UserLoginInfo class) for push notifications
 	private final Map<String, UserLoginInfo> emailNotifications = new ConcurrentHashMap<>();
 
 	public PushController(ServerKeys serverKeys, CryptoService cryptoService, ObjectMapper objectMapper) {
@@ -152,7 +151,6 @@ public class PushController {
 			try {
 				sendPushMessageToEmail(key, message);
 			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -176,9 +174,8 @@ public class PushController {
 
 			boolean success = sendPushMessage(loginInfo, encryptedMessage);
 
-			// TODO: remove subs
 			if (!success) {
-				// failedSubscriptions.add(subscription.getEndpoint());
+				this.emailNotifications.remove(email);
 			}
 		} catch (InvalidKeyException | NoSuchAlgorithmException | InvalidAlgorithmParameterException
 				| IllegalStateException | InvalidKeySpecException | NoSuchPaddingException | IllegalBlockSizeException

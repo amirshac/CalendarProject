@@ -24,4 +24,20 @@ public class EventService {
 		eventDao.addEvent(event);
 	}
 	
+	public List<Event> getAllEvents() throws DaoException{
+		return eventDao.getAllEvents();
+	}
+	
+	public Event getEventById(int id) throws DaoException{
+		return eventDao.getEventById(id);
+	}
+	
+	public void updateEvent(Event event) throws DaoException{
+		eventDao.updateEvent(event);
+	}
+	
+	public void deleteEvent(int id) throws DaoException{
+		eventDao.deleteEvent(id);
+	}
+	
 }

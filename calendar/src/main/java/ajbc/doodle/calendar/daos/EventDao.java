@@ -20,28 +20,13 @@ public interface EventDao {
 	@Transactional(readOnly = false)
 	public void updateEvent(Event event) throws DaoException;
 
-	public Event getEvent(int eventId) throws DaoException;
+	public Event getEventById(int eventId) throws DaoException;
 
 	@Transactional(readOnly = false)
 	void deleteEvent(int eventId) throws DaoException;
+
+	List<Event> getAllEvents() throws DaoException;
 	
-
-//	@Transactional(readOnly = false)
-//	public default void deleteUser(Integer userId) throws DaoException{
-//		throw new DaoException("Method not implemented");
-//	}
-//	
-//	//@Transactional(readOnly = false)
-//	public default List<User> getAllUsers() throws DaoException{
-//		throw new DaoException("Method not implemented");
-//	}
-//	
-//	@Transactional(readOnly = false)
-//	public default void hardDeleteAllUsers() throws DataAccessException, DaoException {
-//		throw new DaoException("Method not implemented");
-//	}
-
-	//Queries
 	
 	
 }
