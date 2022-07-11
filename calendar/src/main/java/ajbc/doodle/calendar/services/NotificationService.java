@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.daos.NotificationDao;
 import ajbc.doodle.calendar.daos.UserDao;
+import ajbc.doodle.calendar.entities.Event;
 import ajbc.doodle.calendar.entities.Notification;
 import ajbc.doodle.calendar.entities.User;
 
@@ -24,4 +25,19 @@ public class NotificationService {
 		notificationDao.addNotification(notification);
 	}
 	
+	public List<Notification> getAllNotifications() throws DaoException{
+		return notificationDao.getAllNotifications();
+	}
+	
+	public Notification getNotificationById(int id) throws DaoException{
+		return notificationDao.getNotificationById(id);
+	}
+	
+	public void updateNotification(Notification notification) throws DaoException{
+		notificationDao.updateNotification(notification);
+	}
+	
+	public void deleteNotification(Integer id) throws DaoException {
+		notificationDao.deleteNotification(id);
+	}
 }

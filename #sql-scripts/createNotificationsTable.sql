@@ -6,5 +6,5 @@ CREATE TABLE Notifications(
 	eventTime DateTime,
 	reminderUnit varchar(64),
 	reminderQuantity int,
-	deleted bit default 0
+	deleted bit default 0 not null
 );

@@ -30,7 +30,7 @@ public class HtNotificationDao implements NotificationDao {
 	}
 		
 	@Override
-	public Notification getNotification(int notificationId) throws DaoException {
+	public Notification getNotificationById(int notificationId) throws DaoException {
 		Notification notification = template.get(Notification.class, notificationId);
 		if (notification == null)
 			throw new DaoException("No notification in DB with ID: " + notificationId);
@@ -38,8 +38,14 @@ public class HtNotificationDao implements NotificationDao {
 	}
 	
 	@Override
+	public List<Notification> getAllNotifications() throws DaoException{
+		DetachedCriteria criteria = DetachedCriteria.forClass(Notification.class);
+		return (List<Notification>) template.findByCriteria(criteria);
+	}
+	
+	@Override
 	public void deleteNotification(int notificationId) throws DaoException{
-		Notification notification = getNotification(notificationId);
+		Notification notification = getNotificationById(notificationId);
 		notification.setDeleted(true);
 		updateNotification(notification);
 	}

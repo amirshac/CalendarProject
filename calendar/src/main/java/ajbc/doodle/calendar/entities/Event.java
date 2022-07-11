@@ -45,7 +45,7 @@ public class Event {
 	private int eventId;
 	
 	@NonNull
-	private int ownerId;
+	private Integer ownerId;
 	@NonNull
 	private String title;
 	@NonNull
@@ -53,7 +53,7 @@ public class Event {
 	@NonNull
 	private LocalDateTime ending;
 	@NonNull
-	private boolean allDay;
+	private Boolean allDay;
 	@NonNull
 	private String address;
 	@NonNull

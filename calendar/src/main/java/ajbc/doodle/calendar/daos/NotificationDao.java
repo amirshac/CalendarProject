@@ -21,11 +21,12 @@ public interface NotificationDao {
 	@Transactional(readOnly = false)
 	public void updateNotification(Notification notification) throws DaoException;
 
-	public Notification getNotification(int notificationId) throws DaoException;
+	public Notification getNotificationById(int notificationId) throws DaoException;
+
+	List<Notification> getAllNotifications() throws DaoException;
 
 	@Transactional(readOnly = false)
 	void deleteNotification(int notificationId) throws DaoException;
-
 	
 //	//@Transactional(readOnly = false)
 //	public default List<User> getAllUsers() throws DaoException{

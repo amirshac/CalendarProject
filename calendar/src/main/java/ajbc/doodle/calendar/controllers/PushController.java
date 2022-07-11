@@ -112,7 +112,6 @@ public class PushController {
 		} catch (DaoException e) {
 			System.out.println(e);
 		}
-
 	}
 
 	@PostMapping("/unsubscribe/{email}")

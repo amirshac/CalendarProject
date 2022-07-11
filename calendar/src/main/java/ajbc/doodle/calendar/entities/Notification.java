@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -21,6 +23,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @ToString
 
 @Entity
@@ -28,19 +31,26 @@ import lombok.ToString;
 public class Notification {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int notificationId;
+	private Integer notificationId;
 	
-	private int eventId; // which event the notification belongs to
-	
+	@NonNull
+	private Integer eventId; // which event the notification belongs to
+	@NonNull
 	private String title;
+	@NonNull
 	private String message;
-	
+	@NonNull
 	private LocalDateTime eventTime;
 	
 	@Enumerated(EnumType.STRING)
+	@NonNull
 	private ReminderUnit reminderUnit;
 	
-	private int reminderQuantity;
+	@NonNull
+	private Integer reminderQuantity;
 	
-	private boolean deleted;
+	//TODO: fix - CRUD "update" deleted can be null if value not set
+	private Boolean deleted;
+	
+	//TODO: Add notification guest list
 }
