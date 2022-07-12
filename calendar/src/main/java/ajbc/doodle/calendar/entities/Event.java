@@ -57,7 +57,7 @@ public class Event {
 	private String title;
 	@NonNull
 	private LocalDateTime starting;
-	@NonNull
+	//@NonNull
 	private LocalDateTime ending;
 	@NonNull
 	private Boolean allDay;

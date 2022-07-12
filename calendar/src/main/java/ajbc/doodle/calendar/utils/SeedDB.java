@@ -42,8 +42,8 @@ public class SeedDB {
 		
 		try {
 			seedUsersTable();
-		//	seedEventsTable();
-		//	seedNotificationsTable();
+			seedEventsTable();
+			seedNotificationsTable();
 		}catch (DaoException e) {
 			System.out.println(e);
 		}
@@ -59,8 +59,8 @@ public class SeedDB {
 		List<User> users = new ArrayList<>();
 		
 		users.add( new User("John", "Doe", "john.doe@gmail.com", LocalDate.of(2022, 01, 01), LocalDate.of(2022, 01, 01)) );
-	//	users.add( new User(0, "Mary", "Jane", "mary.jane@gmail.com", LocalDate.of(2022, 01, 01), LocalDate.of(2022, 01, 01), false, null) );
-	//	users.add( new User(0, "Bill", "Gates", "bill.gates@gmail.com", LocalDate.of(2022, 01, 01), LocalDate.of(2022, 01, 01), false, null) );
+		users.add( new User("Mary", "Jane", "mary.jane@gmail.com", LocalDate.of(2022, 01, 01), LocalDate.of(2022, 01, 01)) );
+		users.add( new User("Bill", "Gates", "bill.gates@gmail.com", LocalDate.of(2022, 01, 01), LocalDate.of(2022, 01, 01)) );
 		
 		users.forEach(user ->{
 			System.out.println(user);
@@ -77,17 +77,16 @@ public class SeedDB {
 		
 		user = userService.getUserById(1);
 		
-		event = new Event(0, 1, "JohnsLinkedEvent", LocalDateTime.of(2022, 7, 6, 10, 00), LocalDateTime.of(2022, 07, 06, 10, 30), false, "address1", "desc1", RepeatingOptions.NONE, false, null);
+		event = new Event(0, 1, "Johns Birthday", LocalDateTime.of(2022, 7, 6, 10, 00), LocalDateTime.of(2022, 07, 06, 10, 30), false, "john street", "Its john's birthday", RepeatingOptions.NONE, false, null);
 		
-		notification = new Notification(1, "JohnsNestedNotification", "not1", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.MINUTES, 30);
+		notification = new Notification(1, "Johns birthday notification", event.getDescription(), event.getStarting(), ReminderUnit.MINUTES, 30);
+		notification.refresh();
 		
 		event.addNotification(notification);
 		user.addEvent(event);
 		
 		System.out.println(user);
-		
-		
-		
+			
 		userService.updateUser(user);
 		
 		System.out.println("users seeded");
@@ -117,12 +116,13 @@ public class SeedDB {
 	System.out.println("seeding notifications");
 		
 		List<Notification> notifications = new ArrayList<>();
-//		notifications.add( new Notification(0, 1, "JohnsNotification", "msg1", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.MINUTES, 30, false) );
-//		notifications.add( new Notification(0, 2, "MarysNotification", "msg2", LocalDateTime.of(2022, 7, 7, 11, 00), ReminderUnit.MINUTES, 30, false) );
-//		notifications.add( new Notification(0, 3, "BillsNotification", "msg3", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.HOURS, 30, false) );
+		notifications.add( new Notification(1, "JohnsNotification", "desc1", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.MINUTES, 30) );
+		notifications.add( new Notification(2, "MarysNotification", "desc2", LocalDateTime.of(2022, 7, 7, 11, 00), ReminderUnit.MINUTES, 30) );
+		notifications.add( new Notification(3, "BillsNotification", "desc3", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.HOURS, 1) );
 
 		
 		notifications.forEach(notification ->{
+			notification.refresh();
 			System.out.println(notification);
 			try {
 				notificationService.addNotification(notification);
