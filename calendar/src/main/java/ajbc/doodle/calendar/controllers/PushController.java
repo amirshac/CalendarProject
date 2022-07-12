@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,6 +56,7 @@ import ajbc.doodle.calendar.services.PushService;
 import ajbc.doodle.calendar.services.UserService;
 
 @RestController
+@RequestMapping("/push")
 public class PushController {
 
 	@Autowired
@@ -86,17 +88,17 @@ public class PushController {
 		
 	}
 
-	@GetMapping(path = "push/publicSigningKey", produces = "application/octet-stream")
+	@GetMapping(path = "publicSigningKey", produces = "application/octet-stream")
 	public byte[] publicSigningKey() {
 		return this.serverKeys.getPublicKeyUncompressed();
 	}
 
-	@GetMapping(path = "/push/publicSigningKeyBase64")
+	@GetMapping(path = "/publicSigningKeyBase64")
 	public String publicSigningKeyBase64() {
 		return this.serverKeys.getPublicKeyBase64();
 	}
 
-	@PostMapping("push/subscribe/{email}")
+	@PostMapping("subscribe/{email}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void subscribe(@RequestBody Subscription subscription, @PathVariable(required = false) String email) {
 
@@ -117,7 +119,7 @@ public class PushController {
 		}
 	}
 
-	@PostMapping("push/unsubscribe/{email}")
+	@PostMapping("unsubscribe/{email}")
 	public void unsubscribe(@RequestBody SubscriptionEndpoint subscription,
 			@PathVariable(required = false) String email) {
 		try {
@@ -134,19 +136,16 @@ public class PushController {
 	}
 
 	// TODO: fix to contain email string
-	@PostMapping("push/isSubscribed")
+	@PostMapping("isSubscribed")
 	public boolean isSubscribed(@RequestBody SubscriptionEndpoint subscription) {
 		//return this.subscriptions.containsKey(subscription.getEndpoint());
 		return false;
 	}
 
 	
-	@Scheduled(fixedDelay = 3_000)
-	public void testNotification() {
-		pushService.sendPushMessageToAllUsers(new PushMessage("test", "testing push notification"));
-	}
-
-
-
+//	@Scheduled(fixedDelay = 3_000)
+//	public void testNotification() {
+//		pushService.sendPushMessageToAllUsers(new PushMessage("test", "testing push notification"));
+//	}
 
 }

@@ -30,7 +30,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ajbc.doodle.calendar.Application;
+import ajbc.doodle.calendar.CalendarException;
 import ajbc.doodle.calendar.ServerKeys;
+import ajbc.doodle.calendar.entities.ErrorMessage;
 import ajbc.doodle.calendar.entities.UserLoginInfo;
 
 @Component
@@ -62,19 +64,39 @@ public class PushService {
 		this.userMap.remove(email);
 	}
 	
+
+	/**
+	 * Encrypts message into byte array using user's encryption keys in userlogininfo
+	 * @param message
+	 * @param loginInfo
+	 * @return
+	 * @throws CalendarException
+	 */
+	private byte[] encryptMessage(Object message, UserLoginInfo loginInfo) throws CalendarException {
+		byte[] encryptedMessage = null;
+		try {
+			encryptedMessage = this.cryptoService.encrypt(this.objectMapper.writeValueAsString(message),
+			loginInfo.getP256dhKey(), loginInfo.getAuth(), 0);
+		} catch (Exception e) {
+			throw new CalendarException("Can't encrypt message " + e.getMessage());
+		}
+		
+		return encryptedMessage;
+	}
 	
-	public void sendPushMessageToAllUsers(Object message) {
+	public void sendPushMessageToAllUsersInMap(Object message) {
 		if (this.userMap.isEmpty())
 			return;
 
 		for (String key : userMap.keySet()) {
 			try {
-				sendPushMessageToUser(key, message);
-			} catch (JsonProcessingException e) {
+				sendPushMessageToUserMap(key, message);
+			} catch (CalendarException e) {
 				e.printStackTrace();
 			}
 		}
 	}
+	
 	
 	/**
 	 * Encrypts and sends push message to registered email
@@ -82,26 +104,33 @@ public class PushService {
 	 * @param email
 	 * @param message
 	 * @throws JsonProcessingException
+	 * @throws CalendarException 
 	 */
-	private void sendPushMessageToUser(String email, Object message) throws JsonProcessingException {
+	public void sendPushMessageToUserMap(String email, Object message) throws CalendarException {
 
 		UserLoginInfo loginInfo = userMap.get(email);
 
 		try {
 			// message encryption
-			byte[] encryptedMessage = this.cryptoService.encrypt(this.objectMapper.writeValueAsString(message),
-					loginInfo.getP256dhKey(), loginInfo.getAuth(), 0);
-
+			byte[] encryptedMessage = encryptMessage(message, loginInfo);
+			
 			boolean success = sendPushMessage(loginInfo, encryptedMessage);
 
 			if (!success) {
 				this.userMap.remove(email);
 			}
-		} catch (InvalidKeyException | NoSuchAlgorithmException | InvalidAlgorithmParameterException
-				| IllegalStateException | InvalidKeySpecException | NoSuchPaddingException | IllegalBlockSizeException
-				| BadPaddingException e) {
-			Application.logger.error("send encrypted message", e);
+		} catch (CalendarException e) {
+			Application.logger.error(e.getMessage());
 		}
+	}
+	
+	public void sendPushMessageToUsersLoginInfo(UserLoginInfo loginInfo, Object message) throws CalendarException  {
+		
+		byte[] encryptedMessage = encryptMessage(message, loginInfo);
+		boolean success = sendPushMessage(loginInfo, encryptedMessage);
+		
+		if (!success)
+			throw new CalendarException("Couldn't send push message to user " + loginInfo);
 	}
 
 	/**
