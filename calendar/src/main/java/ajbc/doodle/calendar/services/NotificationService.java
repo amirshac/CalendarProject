@@ -25,7 +25,8 @@ public class NotificationService {
 	EventService eventService;
 	
 	public void addNotification(Notification notification) throws DaoException {
-	//	notificationDao.addNotification(notification);
+		// make sure proper alert time is calculated with refresh
+		notification.refresh(); 
 		eventService.addNotificationToEvent(notification.getEventId(), notification);
 	}
 	
@@ -38,6 +39,8 @@ public class NotificationService {
 	}
 	
 	public void updateNotification(Notification notification) throws DaoException{
+		// make sure proper alert time is calculated with refresh
+		notification.refresh(); 
 		notificationDao.updateNotification(notification);
 	}
 	

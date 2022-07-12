@@ -69,9 +69,11 @@ public class Notification implements Comparable<Notification>{
 	}
 
 	
-	// calculates proper alerttime and updates
+	// calculates proper alerttime and updates and other values
 	public void refresh() {
 		this.alertTime = calculateAlertTime();
+		
+		if (this.deleted == null) this.deleted = false;
 	}
 	
 	public LocalDateTime calculateAlertTime() {
@@ -79,7 +81,6 @@ public class Notification implements Comparable<Notification>{
 		
 		if (reminderUnit == ReminderUnit.HOURS) chronoUnit = ChronoUnit.HOURS;
 		
-		return eventTime.minus(reminderQuantity, chronoUnit);
-		
+		return eventTime.minus(reminderQuantity, chronoUnit);	
 	}
 }
