@@ -79,7 +79,7 @@ public class SeedDB {
 		
 		event = new Event(0, 1, "JohnsLinkedEvent", LocalDateTime.of(2022, 7, 6, 10, 00), LocalDateTime.of(2022, 07, 06, 10, 30), false, "address1", "desc1", RepeatingOptions.NONE, false, null);
 		
-		notification = new Notification(0, 1, "JohnsNestedNotification", "not1", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.MINUTES, 30, false);
+		notification = new Notification(1, "JohnsNestedNotification", "not1", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.MINUTES, 30);
 		
 		event.addNotification(notification);
 		user.addEvent(event);
@@ -117,9 +117,9 @@ public class SeedDB {
 	System.out.println("seeding notifications");
 		
 		List<Notification> notifications = new ArrayList<>();
-		notifications.add( new Notification(0, 1, "JohnsNotification", "msg1", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.MINUTES, 30, false) );
-		notifications.add( new Notification(0, 2, "MarysNotification", "msg2", LocalDateTime.of(2022, 7, 7, 11, 00), ReminderUnit.MINUTES, 30, false) );
-		notifications.add( new Notification(0, 3, "BillsNotification", "msg3", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.HOURS, 30, false) );
+//		notifications.add( new Notification(0, 1, "JohnsNotification", "msg1", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.MINUTES, 30, false) );
+//		notifications.add( new Notification(0, 2, "MarysNotification", "msg2", LocalDateTime.of(2022, 7, 7, 11, 00), ReminderUnit.MINUTES, 30, false) );
+//		notifications.add( new Notification(0, 3, "BillsNotification", "msg3", LocalDateTime.of(2022, 7, 6, 10, 00), ReminderUnit.HOURS, 30, false) );
 
 		
 		notifications.forEach(notification ->{
