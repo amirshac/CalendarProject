@@ -21,8 +21,12 @@ public class NotificationService {
 	@Qualifier("HtNotificationDao")
 	NotificationDao notificationDao;
 	
+	@Autowired
+	EventService eventService;
+	
 	public void addNotification(Notification notification) throws DaoException {
-		notificationDao.addNotification(notification);
+	//	notificationDao.addNotification(notification);
+		eventService.addNotificationToEvent(notification.getEventId(), notification);
 	}
 	
 	public List<Notification> getAllNotifications() throws DaoException{

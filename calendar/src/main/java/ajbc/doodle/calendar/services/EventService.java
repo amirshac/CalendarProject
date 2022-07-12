@@ -10,6 +10,7 @@ import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.daos.EventDao;
 import ajbc.doodle.calendar.daos.UserDao;
 import ajbc.doodle.calendar.entities.Event;
+import ajbc.doodle.calendar.entities.Notification;
 import ajbc.doodle.calendar.entities.User;
 
 
@@ -43,5 +44,12 @@ public class EventService {
 	public void deleteEvent(int id) throws DaoException{
 		eventDao.deleteEvent(id);
 	}
+	
+
+	public void addNotificationToEvent(int eventId, Notification notification) throws DaoException {
+		Event event = this.getEventById(eventId);
+		event.addNotification(notification);
+		this.updateEvent(event);
+	}	
 	
 }
