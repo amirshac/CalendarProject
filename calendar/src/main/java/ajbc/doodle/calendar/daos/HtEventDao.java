@@ -48,5 +48,7 @@ public class HtEventDao implements EventDao {
 		DetachedCriteria criteria = DetachedCriteria.forClass(Event.class);
 		return (List<Event>) template.findByCriteria(criteria);
 	}
+	
+	
 
 }

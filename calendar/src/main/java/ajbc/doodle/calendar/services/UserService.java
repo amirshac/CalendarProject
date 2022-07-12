@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.daos.UserDao;
+import ajbc.doodle.calendar.entities.Event;
 import ajbc.doodle.calendar.entities.User;
 import ajbc.doodle.calendar.entities.UserLoginInfo;
 
@@ -73,7 +74,7 @@ public class UserService {
 		userDao.updateUser(user);
 	}
 	
-	
+
 	// QUERIES
 	public boolean doesEmailExist(String email) {
 		try {
@@ -83,5 +84,10 @@ public class UserService {
 			return false;
 		}
 	}
-
+	
+	public void addEventToUser(int userId, Event event) throws DaoException {
+		User user = this.getUserById(userId);
+		user.addEvent(event);
+		this.updateUser(user);
+	}	
 }

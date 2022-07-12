@@ -20,8 +20,12 @@ public class EventService {
 	@Qualifier("HtEventDao")
 	EventDao eventDao;
 	
+	@Autowired
+	UserService userService;
+	
 	public void addEvent(Event event) throws DaoException {
 		eventDao.addEvent(event);
+		userService.addEventToUser(event.getOwnerId(), event);
 	}
 	
 	public List<Event> getAllEvents() throws DaoException{

@@ -55,6 +55,7 @@ public class EventController {
 	public ResponseEntity<?> addEvent(@RequestBody Event event) {
 		try {
 			eventService.addEvent(event);
+			
 			return ResponseEntity.status(HttpStatus.CREATED).body(event);
 			
 		} catch (DaoException e) {
