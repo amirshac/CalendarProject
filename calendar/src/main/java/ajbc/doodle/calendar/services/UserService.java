@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import ajbc.doodle.calendar.CalendarException;
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.daos.UserDao;
 import ajbc.doodle.calendar.entities.Event;
 import ajbc.doodle.calendar.entities.User;
 import ajbc.doodle.calendar.entities.UserLoginInfo;
+import ajbc.doodle.calendar.entities.webpush.PushMessage;
 
 
 @Service
@@ -19,6 +21,9 @@ public class UserService {
 	@Autowired
 	@Qualifier("HtUserDao")
 	UserDao userDao;
+	
+	@Autowired
+	PushService pushService;
 	
 	public void addUser(User user) throws DaoException {
 		userDao.addUser(user);
@@ -49,7 +54,7 @@ public class UserService {
 	}
 	
 
-	public void attemptLogIn(String email, UserLoginInfo info) throws DaoException {
+	public void attemptLogIn(String email, UserLoginInfo info) throws DaoException, CalendarException {
 		System.out.println("attemptlogin email: " + email);
 		
 		User user = userDao.getUserByEmail(email);
@@ -61,13 +66,21 @@ public class UserService {
 		user.setLoggedIn(true);
 		
 		userDao.updateUser(user);
+		
+		// send logged in notification to user
+		pushService.sendPushMessageToUser(info, new PushMessage("logged in", "Server push message: you are now logged in"));
+		
 	}
 	
-	public void attemptLogout(String email, String endpoint) throws DaoException {
+	public void attemptLogout(String email, String endpoint) throws DaoException, CalendarException {
 		System.out.println("attemptlogout email: " + email);
 		
 		User user = userDao.getUserByEmail(email);
 		
+//		// send logged in notification to user
+//		UserLoginInfo info = user.getLoginInfo();
+//		pushService.sendPushMessageToUser(info, new PushMessage("logged out", "you are now logged out"));
+				
 		user.setLoginInfo(null);
 		user.setLoggedIn(false);
 		

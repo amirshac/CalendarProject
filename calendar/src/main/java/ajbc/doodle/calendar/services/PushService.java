@@ -10,18 +10,9 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpRequest.Builder;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
@@ -32,7 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ajbc.doodle.calendar.Application;
 import ajbc.doodle.calendar.CalendarException;
 import ajbc.doodle.calendar.ServerKeys;
-import ajbc.doodle.calendar.entities.ErrorMessage;
 import ajbc.doodle.calendar.entities.UserLoginInfo;
 
 @Component
@@ -124,7 +114,13 @@ public class PushService {
 		}
 	}
 	
-	public void sendPushMessageToUsersLoginInfo(UserLoginInfo loginInfo, Object message) throws CalendarException  {
+	/**
+	 * sends push message to user already logged in using their logininfo
+	 * @param loginInfo
+	 * @param message
+	 * @throws CalendarException
+	 */
+	public void sendPushMessageToUser(UserLoginInfo loginInfo, Object message) throws CalendarException  {
 		
 		byte[] encryptedMessage = encryptMessage(message, loginInfo);
 		boolean success = sendPushMessage(loginInfo, encryptedMessage);

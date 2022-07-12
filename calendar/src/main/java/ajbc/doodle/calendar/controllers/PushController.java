@@ -44,6 +44,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ajbc.doodle.calendar.Application;
+import ajbc.doodle.calendar.CalendarException;
 import ajbc.doodle.calendar.ServerKeys;
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.entities.Notification;
@@ -100,7 +101,7 @@ public class PushController {
 
 	@PostMapping("subscribe/{email}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void subscribe(@RequestBody Subscription subscription, @PathVariable(required = false) String email) {
+	public void subscribe(@RequestBody Subscription subscription, @PathVariable(required = false) String email) throws CalendarException {
 
 		try {
 			// extract the communication info we need 
@@ -121,8 +122,9 @@ public class PushController {
 
 	@PostMapping("unsubscribe/{email}")
 	public void unsubscribe(@RequestBody SubscriptionEndpoint subscription,
-			@PathVariable(required = false) String email) {
+			@PathVariable(required = false) String email) throws CalendarException {
 		try {
+			System.out.println(subscription.getEndpoint());
 			userService.attemptLogout(email, subscription.getEndpoint());
 
 			// this.subscriptions.remove(subscription.getEndpoint(), subscription);
