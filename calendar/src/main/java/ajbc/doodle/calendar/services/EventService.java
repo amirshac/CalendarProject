@@ -45,11 +45,10 @@ public class EventService {
 		eventDao.deleteEvent(id);
 	}
 	
-
 	public void addNotificationToEvent(int eventId, Notification notification) throws DaoException {
 		Event event = this.getEventById(eventId);
 		event.addNotification(notification);
 		this.updateEvent(event);
-	}	
+	}
 	
 }

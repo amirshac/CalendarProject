@@ -2,15 +2,14 @@ package ajbc.doodle.calendar.daos;
 
 import java.util.List;
 
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
-import ajbc.doodle.calendar.entities.Event;
 import ajbc.doodle.calendar.entities.Notification;
-import ajbc.doodle.calendar.entities.User;
 
 @SuppressWarnings("unchecked")
 @Repository("HtNotificationDao")
@@ -40,6 +39,8 @@ public class HtNotificationDao implements NotificationDao {
 	@Override
 	public List<Notification> getAllNotifications() throws DaoException{
 		DetachedCriteria criteria = DetachedCriteria.forClass(Notification.class);
+		Criterion critNotDeleted = Restrictions.eqOrIsNull("deleted", false);
+		criteria.add(critNotDeleted);
 		return (List<Notification>) template.findByCriteria(criteria);
 	}
 	
@@ -49,24 +50,5 @@ public class HtNotificationDao implements NotificationDao {
 		notification.setDeleted(true);
 		updateNotification(notification);
 	}
-//	
-//	@Override
-//	public void deleteEvent(int eventId) throws DaoException{
-//		Event event = getEvent(eventId);
-//		event.setDeleted(true);
-//		updateEvent(event);
-//	}
-//	
-//	@Override
-//	public List<User> getAllUsers() throws DaoException{
-//		DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
-//		return (List<User>) template.findByCriteria(criteria);
-//	}
-//	
-//	@Override
-//	public void hardDeleteAllUsers() throws DataAccessException, DaoException {
-//		template.deleteAll(getAllUsers());
-//	}
-//	
-
+	
 }

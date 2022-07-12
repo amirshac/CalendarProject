@@ -47,4 +47,8 @@ public class NotificationService {
 	public void deleteNotification(Integer id) throws DaoException {
 		notificationDao.deleteNotification(id);
 	}
+	
+	// Queries
+	
+	
 }

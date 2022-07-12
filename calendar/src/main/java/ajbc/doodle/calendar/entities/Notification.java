@@ -54,10 +54,9 @@ public class Notification implements Comparable<Notification>{
 	@NonNull
 	private Integer reminderQuantity;
 	
-	// calculated value
+	// calculated value by refresh method
 	private LocalDateTime alertTime;
 	
-	//TODO: fix - CRUD "update" deleted can be null if value not set
 	private Boolean deleted;
 	
 	@Override
