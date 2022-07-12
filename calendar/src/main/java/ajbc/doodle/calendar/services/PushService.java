@@ -62,6 +62,7 @@ public class PushService {
 		this.userMap.remove(email);
 	}
 	
+	
 	public void sendPushMessageToAllUsers(Object message) {
 		if (this.userMap.isEmpty())
 			return;

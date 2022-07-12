@@ -36,7 +36,7 @@ async function checkSubscription() {
 	
 	if (subscription) {
 
-		const response = await fetch("/isSubscribed", {
+		const response = await fetch("push/isSubscribed", {
 			method: 'POST',
 			body: JSON.stringify({ endpoint: subscription.endpoint }),
 			headers: {
@@ -59,7 +59,7 @@ async function checkSubscription() {
 }
 
 async function init() {
-	fetch('/publicSigningKey')
+	fetch('push/publicSigningKey')
 		.then(response => response.arrayBuffer())
 		.then(key => this.publicSigningKey = key)
 		.finally(() => console.info('Application Server Public Key fetched from the server'));
@@ -105,7 +105,7 @@ async function unsubscribe() {
 		if (successful) {
 			console.info('Unsubscription successful');
 
-			await fetch("/unsubscribe/" + email.value, {
+			await fetch("push/unsubscribe/" + email.value, {
 				method: 'POST',
 				body: JSON.stringify({ endpoint: subscription.endpoint }),
 				headers: {
@@ -142,7 +142,7 @@ async function subscribe() {
 	console.info(`Subscribed to Push Service: ${subscription.endpoint}`);
 
 // TODO: login?
-	await fetch("/subscribe/" + email.value, {
+	await fetch("push/subscribe/" + email.value, {
 		method: 'POST',
 		body: JSON.stringify(subscription),
 		headers: {

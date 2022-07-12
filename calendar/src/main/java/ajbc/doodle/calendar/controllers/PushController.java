@@ -17,6 +17,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -71,6 +72,8 @@ public class PushController {
 	private final Algorithm jwtAlgorithm;
 
 	private final ObjectMapper objectMapper;
+	
+	private Set<String> currentEndPoints;
 
 
 	public PushController(ServerKeys serverKeys, CryptoService cryptoService, ObjectMapper objectMapper) {
@@ -80,19 +83,20 @@ public class PushController {
 		this.objectMapper = objectMapper;
 
 		this.jwtAlgorithm = Algorithm.ECDSA256(this.serverKeys.getPublicKey(), this.serverKeys.getPrivateKey());
+		
 	}
 
-	@GetMapping(path = "/publicSigningKey", produces = "application/octet-stream")
+	@GetMapping(path = "push/publicSigningKey", produces = "application/octet-stream")
 	public byte[] publicSigningKey() {
 		return this.serverKeys.getPublicKeyUncompressed();
 	}
 
-	@GetMapping(path = "/publicSigningKeyBase64")
+	@GetMapping(path = "/push/publicSigningKeyBase64")
 	public String publicSigningKeyBase64() {
 		return this.serverKeys.getPublicKeyBase64();
 	}
 
-	@PostMapping("/subscribe/{email}")
+	@PostMapping("push/subscribe/{email}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void subscribe(@RequestBody Subscription subscription, @PathVariable(required = false) String email) {
 
@@ -113,7 +117,7 @@ public class PushController {
 		}
 	}
 
-	@PostMapping("/unsubscribe/{email}")
+	@PostMapping("push/unsubscribe/{email}")
 	public void unsubscribe(@RequestBody SubscriptionEndpoint subscription,
 			@PathVariable(required = false) String email) {
 		try {
@@ -130,10 +134,11 @@ public class PushController {
 	}
 
 	// TODO: fix to contain email string
-//	@PostMapping("/isSubscribed")
-//	public boolean isSubscribed(@RequestBody SubscriptionEndpoint subscription) {
-//		return this.subscriptions.containsKey(subscription.getEndpoint());
-//	}
+	@PostMapping("push/isSubscribed")
+	public boolean isSubscribed(@RequestBody SubscriptionEndpoint subscription) {
+		//return this.subscriptions.containsKey(subscription.getEndpoint());
+		return false;
+	}
 
 	
 	@Scheduled(fixedDelay = 3_000)
