@@ -1,4 +1,4 @@
-package ajbc.doodle.calendar.entities;
+package ajbc.doodle.calendar.enums;
 
 public enum ReminderUnit {
 	HOURS, MINUTES

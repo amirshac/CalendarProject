@@ -34,8 +34,6 @@ import org.springframework.stereotype.Component;
 
 import ajbc.doodle.calendar.Application;
 
-
-
 @Component
 public class CryptoService {
 
