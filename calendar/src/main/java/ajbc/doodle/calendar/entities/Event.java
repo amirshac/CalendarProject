@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -73,15 +74,15 @@ public class Event {
 	private boolean deleted;
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
-	//@OneToMany(mappedBy = "eventId", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@OneToMany(mappedBy = "eventId", cascade = { CascadeType.MERGE })
 	private List<Notification> notifications;
 	
-//	@JsonIgnore
-////	@JsonProperty(access = Access.READ_ONLY)
-////	@OneToOne(fetch = FetchType.EAGER)
-////	@JoinColumn(name = "ownerId")
-//	private User owner;
+	@ToString.Exclude
+	@JsonIgnore
+	@ManyToOne(cascade = {CascadeType.MERGE})
+	@Transient
+	@JoinColumn(name="OwnerId")
+	private User owner;
 	
 	public void addNotification(Notification notification) {
 		

@@ -77,7 +77,7 @@ public class SeedDB {
 		
 		user = userService.getUserById(1);
 		
-		event = new Event(0, 1, "Johns Birthday", LocalDateTime.of(2022, 7, 6, 10, 00), LocalDateTime.of(2022, 07, 06, 10, 30), false, "john street", "Its john's birthday", RepeatingOptions.NONE, false, null);
+		event = new Event(0, 1, "Johns Birthday", LocalDateTime.of(2022, 7, 6, 10, 00), LocalDateTime.of(2022, 07, 06, 10, 30), false, "john street", "Its john's birthday", RepeatingOptions.NONE, false, null, null);
 		
 		notification = new Notification(1, "Johns birthday notification", event.getDescription(), event.getStarting(), ReminderUnit.MINUTES, 30);
 		notification.refresh();
@@ -96,9 +96,9 @@ public class SeedDB {
 		System.out.println("seeding events");
 		
 		List<Event> events = new ArrayList<>();
-		events.add( new Event(0, 1, "JohnsEvent", LocalDateTime.of(2022, 7, 6, 10, 00), LocalDateTime.of(2022, 07, 06, 10, 30), false, "address1", "desc1", RepeatingOptions.NONE, false, null) );
-		events.add( new Event(0, 2, "MarysEvent", LocalDateTime.of(2022, 7, 7, 11, 00), LocalDateTime.of(2022, 07, 06, 11, 30), false, "address2", "desc2", RepeatingOptions.DAILY, false, null) );
-		events.add( new Event(0, 3, "BillsEvent", LocalDateTime.of(2022, 7, 8, 11, 00), null, true, "address3", "desc3", RepeatingOptions.WEEKLY, false, null) );
+		events.add( new Event(0, 1, "JohnsEvent", LocalDateTime.of(2022, 7, 6, 10, 00), LocalDateTime.of(2022, 07, 06, 10, 30), false, "address1", "desc1", RepeatingOptions.NONE, false, null, null) );
+		events.add( new Event(0, 2, "MarysEvent", LocalDateTime.of(2022, 7, 7, 11, 00), LocalDateTime.of(2022, 07, 06, 11, 30), false, "address2", "desc2", RepeatingOptions.DAILY, false, null, null) );
+		events.add( new Event(0, 3, "BillsEvent", LocalDateTime.of(2022, 7, 8, 11, 00), null, true, "address3", "desc3", RepeatingOptions.WEEKLY, false, null, null) );
 		
 		events.forEach(event ->{
 			System.out.println(event);

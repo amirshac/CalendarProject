@@ -44,6 +44,12 @@ public class NotificationService {
 		notificationDao.updateNotification(notification);
 	}
 	
+	// Doesn't re-calculate alert time. Used to postpone alerts in DB
+	public void updateNotificationWithoutRefresh(Notification notification) throws DaoException{
+		notificationDao.updateNotification(notification);
+		eventService.updateEvent(notification.getEvent());
+	}
+	
 	public void deleteNotification(Integer id) throws DaoException {
 		notificationDao.deleteNotification(id);
 	}

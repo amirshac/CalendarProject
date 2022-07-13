@@ -7,15 +7,23 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import ajbc.doodle.calendar.CalendarException;
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.entities.Notification;
+import ajbc.doodle.calendar.entities.User;
+import ajbc.doodle.calendar.entities.UserLoginInfo;
+import ajbc.doodle.calendar.entities.webpush.PushMessage;
 import ajbc.doodle.calendar.services.NotificationService;
+import ajbc.doodle.calendar.services.PushService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Component
@@ -33,13 +41,14 @@ public class NotificationManager {
 	private final static int MILISECONDS = 1000;
 	private final static int POOLER_THREAD_WAIT_SECONDS = 10;
 	private final static int HANDLER_THREAD_WAIT_SECONDS = 10;
+	private final static int MINUTES_TO_POSTPONE_UNSENT_NOTIFICATIONS = 1;
 
 	public NotificationManager() throws DaoException {
 		executorService = Executors.newCachedThreadPool();
 		notificationQueue = new PriorityBlockingQueue<Notification>();
 	}
 
-	@EventListener
+	//@EventListener
 	public void init(ContextRefreshedEvent event) {
 		System.out.println("<Notification manager> initializing");
 		poolThread = new Thread(new ManagerQueuePoolerThread());
@@ -139,7 +148,6 @@ public class NotificationManager {
 			System.out.println("<Pooler Thread> notification queue pooled");
 		}
 	}
-
 	
 	
 	private class ManagerQueueHandlerThread implements Runnable {
@@ -154,8 +162,7 @@ public class NotificationManager {
 			while (true) {
 				handleNotifications();
 				
-				if (secondsToSleep < 0)
-					secondsToSleep = HANDLER_THREAD_WAIT_SECONDS;
+				if (notificationQueue.isEmpty()) secondsToSleep = HANDLER_THREAD_WAIT_SECONDS;
 				
 				System.out.println("<Handler Thread> Sleeping " + secondsToSleep + " seconds.");
 				try {
@@ -173,37 +180,54 @@ public class NotificationManager {
 			}
 
 			System.out.println("<Handler Thread> pooling notification queue");
-			if (doesThreadNeedSleep())
-				return;
+			Notification notification = notificationQueue.poll();
 			
-			testPrintQueue();
+			if (doesThreadNeedSleep(notification)) return;
 			
-//			try {
-//
-//
-//			} catch (Exception e) {
-//				System.out.println("<Handler Thread> can't get notifications");
-//			}
+			User owner = notification.getEvent().getOwner();
+			if (owner.isLoggedIn()) { 
+				executorService.execute(new PushNotificationThread(owner.getLoginInfo(), notification));
+				notificationQueue.poll();
+			}else {
+				
+				notification.setAlertTime(LocalDateTime.now().plusMinutes(MINUTES_TO_POSTPONE_UNSENT_NOTIFICATIONS));
+				System.out.println("<Handler Thread> User isn't logged in, new alert changed to: " + notification.getAlertTime());
+				try {
+					// updates notification in DB with new 'uncalculated' alert time
+					notificationService.updateNotificationWithoutRefresh(notification);
+				} catch (DaoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
 			
-			//System.out.println("<Pooler Thread> notification queue pooled");
+			//testPrintQueue();
+			
 		}
 		
-		// Checks how long until the next message and set sleep for that duration
-		private boolean doesThreadNeedSleep() {
-			Notification nextNotificationInQueue = notificationQueue.peek();
-			Duration duration = Duration.between(LocalDateTime.now(), nextNotificationInQueue.getAlertTime());
+		/**
+		 * Checks if thread needs to sleep/wait until the next message in queue 
+		 * also sets sleep time accordingly
+		 * @return true if needs to wait, false otherwise 
+		 */
+		private boolean doesThreadNeedSleep(Notification notification) {
+			Duration duration = Duration.between(LocalDateTime.now(), notification.getAlertTime());
 
 			secondsToSleep = duration.getSeconds();
 			System.out.println("<Handler Thread> Next notification is in seconds: " + secondsToSleep);
 			
+			if (secondsToSleep < 0) secondsToSleep = 0;
 		    return (secondsToSleep > 0);
 		}
 		
+		
 		private synchronized void testPrintQueue() {
 			System.out.println("<Handler Thread> printing queue:");
-			notificationQueue.forEach(n -> System.out.println(n));
+			notificationQueue.forEach(n -> System.out.println(n) );
 		}
 
 	}
 
+	
 }

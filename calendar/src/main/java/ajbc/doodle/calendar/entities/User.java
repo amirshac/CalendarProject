@@ -86,4 +86,8 @@ public class User {
 		
 		events.add(event);	
 	}
+	
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
 }

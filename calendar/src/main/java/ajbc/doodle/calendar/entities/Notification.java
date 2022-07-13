@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -43,7 +44,7 @@ public class Notification implements Comparable<Notification>{
 	private Integer notificationId;
 	
 	@NonNull
-	@Column(insertable=false, updatable=false)
+	//@Column(insertable=false, updatable=false)
 	private Integer eventId; // which event the notification belongs to
 	@NonNull
 	private String title;
@@ -67,6 +68,7 @@ public class Notification implements Comparable<Notification>{
 	@ToString.Exclude
 	@JsonIgnore
 	@ManyToOne(cascade = {CascadeType.MERGE})
+	@Transient
 	@JoinColumn(name="eventId")
 	private Event event;
 	
@@ -78,7 +80,6 @@ public class Notification implements Comparable<Notification>{
 		return this.getAlertTime().isBefore(otherNotification.getAlertTime()) ? -1 : 1;
 	}
 
-	
 	// calculates proper alerttime and updates and other values
 	public void refresh() {
 		this.alertTime = calculateAlertTime();
