@@ -21,24 +21,12 @@ public interface NotificationDao {
 	@Transactional(readOnly = false)
 	public void updateNotification(Notification notification) throws DaoException;
 
+	@Transactional
 	public Notification getNotificationById(int notificationId) throws DaoException;
 
+	@Transactional
 	List<Notification> getAllNotifications() throws DaoException;
 
 	@Transactional(readOnly = false)
-	void deleteNotification(int notificationId) throws DaoException;
-	
-//	//@Transactional(readOnly = false)
-//	public default List<User> getAllUsers() throws DaoException{
-//		throw new DaoException("Method not implemented");
-//	}
-//	
-//	@Transactional(readOnly = false)
-//	public default void hardDeleteAllUsers() throws DataAccessException, DaoException {
-//		throw new DaoException("Method not implemented");
-//	}
-
-	//Queries
-	
-	
+	void deleteNotification(int notificationId) throws DaoException;	
 }

@@ -25,7 +25,7 @@ CREATE TABLE Events(
 
 CREATE TABLE Notifications(
 	notificationId int not null IDENTITY PRIMARY KEY, 
-	eventId	int not null FOREIGN KEY REFERENCES Events(eventId),
+	eventId	int FOREIGN KEY REFERENCES Events(eventId),
 	title	varchar(64) not null,
 	message	varchar(64),
 	eventTime DateTime,

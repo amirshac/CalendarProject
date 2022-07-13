@@ -44,7 +44,6 @@ public class Notification implements Comparable<Notification>{
 	private Integer notificationId;
 	
 	@NonNull
-	//@Column(insertable=false, updatable=false)
 	private Integer eventId; // which event the notification belongs to
 	@NonNull
 	private String title;
@@ -68,8 +67,8 @@ public class Notification implements Comparable<Notification>{
 	@ToString.Exclude
 	@JsonIgnore
 	@ManyToOne(cascade = {CascadeType.MERGE})
-	@Transient
-	@JoinColumn(name="eventId")
+	//@Transient
+	@JoinColumn(name="eventId", insertable=false, updatable=false)
 	private Event event;
 	
 	@Override

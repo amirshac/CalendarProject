@@ -67,7 +67,7 @@ public class AppConfig {
 	public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
 		LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
 		factory.setDataSource(dataSource);
-		factory.setAnnotatedClasses(User.class, Event.class, Notification.class, UserLoginInfo.class, NotificationManager.class);
+		factory.setAnnotatedClasses(User.class, Event.class, Notification.class, UserLoginInfo.class, NotificationManager.class, PushProp.class);
 		
 		Properties props = new Properties();
 		props.setProperty("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");

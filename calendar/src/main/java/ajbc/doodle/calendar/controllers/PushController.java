@@ -144,10 +144,4 @@ public class PushController {
 		return false;
 	}
 
-	
-//	@Scheduled(fixedDelay = 3_000)
-//	public void testNotification() {
-//		pushService.sendPushMessageToAllUsers(new PushMessage("test", "testing push notification"));
-//	}
-
 }

@@ -80,8 +80,7 @@ public class Event {
 	@ToString.Exclude
 	@JsonIgnore
 	@ManyToOne(cascade = {CascadeType.MERGE})
-	@Transient
-	@JoinColumn(name="OwnerId")
+	@JoinColumn(name="OwnerId", insertable=false, updatable=false )
 	private User owner;
 	
 	public void addNotification(Notification notification) {
