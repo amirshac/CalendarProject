@@ -88,7 +88,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n        \"firstName\": \"Nessa\",\r\n        \"lastName\": \"New\",\r\n        \"email\": \"nessa@gmail.com\",\r\n        \"birthDate\": \"2022-01-01\",\r\n        \"joinDate\": \"2022-01-01\",\r\n        \"deleted\": false\r\n }",
+					"raw": " {\r\n \r\n    \"firstName\": \"Johnn\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@gmail.com\",\r\n    \"birthDate\": \"2022-01-01\",\r\n    \"joinDate\": \"2022-01-01\"\r\n }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -96,7 +96,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users/4",
+					"raw": "http://localhost:8080/users/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -104,7 +104,7 @@
 					"port": "8080",
 					"path": [
 						"users",
-						"4"
+						"1"
 					]
 				}
 			},
@@ -136,14 +136,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/events",
+					"raw": "http://localhost:8080/events/",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"events"
+						"events",
+						""
 					]
 				}
 			},
@@ -205,7 +206,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"ownerId\": 1,\r\n        \"title\": \"JohnsNewEvent\",\r\n        \"starting\": \"2022-07-06T10:00:00\",\r\n        \"ending\": \"2022-07-06T10:30:00\",\r\n        \"allDay\": true,\r\n        \"address\": \"address2\",\r\n        \"description\": \"blabla\",\r\n        \"repeatingOptions\": \"NONE\"\r\n    }",
+					"raw": "{\r\n    \"eventId\": 2,\r\n    \"ownerId\": 1,\r\n    \"title\": \"JohnsEvent2\",\r\n    \"starting\": \"2022-07-06T10:00:00\",\r\n    \"ending\": \"2022-07-06T10:30:00\",\r\n    \"allDay\": false,\r\n    \"address\": \"address1\",\r\n    \"description\": \"desc1\",\r\n    \"repeatingOptions\": \"NONE\",\r\n    \"deleted\": false\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -293,7 +294,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"eventId\": 1,\r\n        \"title\": \"notifi\",\r\n        \"message\": \"not1\",\r\n        \"eventTime\": \"2022-07-06T10:00:00\",\r\n        \"reminderUnit\": \"MINUTES\",\r\n        \"reminderQuantity\": 30\r\n}",
+					"raw": "{\r\n        \"eventId\": 10,\r\n        \"title\": \"10 notification\",\r\n        \"message\": \"not 10\",\r\n        \"eventTime\": \"2022-07-12T10:00:00\",\r\n        \"reminderUnit\": \"MINUTES\",\r\n        \"reminderQuantity\": 45\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -309,6 +310,55 @@
 					"port": "8080",
 					"path": [
 						"notifications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put/update notification",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"notificationId\": 2,\r\n    \"eventId\": 1,\r\n    \"title\": \"JohnsNotification\",\r\n    \"message\": \"desc1\",\r\n    \"eventTime\": \"2022-07-06T10:00:00\",\r\n    \"reminderUnit\": \"MINUTES\",\r\n    \"reminderQuantity\": 30,\r\n    \"alertTime\": \"2022-07-13T17:10:08.097\",\r\n    \"deleted\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/notifications/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"notifications",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete notification (soft)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/notifications/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"notifications",
+						"2"
 					]
 				}
 			},
