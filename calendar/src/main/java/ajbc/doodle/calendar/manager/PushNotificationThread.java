@@ -29,7 +29,7 @@ public class PushNotificationThread implements Runnable {
 //	@Autowired
 //	private PushService pushService;
 	
-	@Autowired
+	
 	private NotificationService notificationService;
 
 	private UserLoginInfo loginInfo;
@@ -38,10 +38,11 @@ public class PushNotificationThread implements Runnable {
 	
 	private Notification notification;
 
-	public PushNotificationThread(UserLoginInfo loginInfo, PushProp pushProp, Notification notification) {
+	public PushNotificationThread(UserLoginInfo loginInfo, PushProp pushProp, Notification notification, NotificationService notificationService) {
 		this.loginInfo = loginInfo;
 		this.notification = notification;
 		this.pushProp = pushProp;
+		this.notificationService = notificationService;
 
 	}
 	@Override

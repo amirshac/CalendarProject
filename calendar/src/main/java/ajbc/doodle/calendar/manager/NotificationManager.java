@@ -38,6 +38,7 @@ public class NotificationManager {
 	@Autowired
 	private PushService pushService;
 
+	@Autowired
 	private PushProp pushProp;
 	
 	private PriorityBlockingQueue<Notification> notificationQueue;
@@ -106,12 +107,11 @@ public class NotificationManager {
 
 		Event event = notification.getEvent();
 		User owner = event.getOwner();
-		System.out.println("owner logged in!!!!!>" + owner.isLoggedIn());
 
 		// if user logged in - send notification through sender thread
 		// if user isn't logged in - reschedule notification for later
 		if (owner.isLoggedIn()) {
-			executorService.execute(new PushNotificationThread(owner.getLoginInfo(), pushProp, notification));
+			executorService.execute(new PushNotificationThread(owner.getLoginInfo(), pushProp, notification, notificationService));
 		} else {
 			notification.setAlertTime(LocalDateTime.now().plusMinutes(MINUTES_TO_POSTPONE_UNSENT_NOTIFICATIONS));
 			System.out.println("<Notification Manager> User isn't logged in, new alert changed to: "
