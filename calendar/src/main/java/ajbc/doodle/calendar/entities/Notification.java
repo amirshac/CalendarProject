@@ -64,6 +64,7 @@ public class Notification implements Comparable<Notification>{
 	
 	private Boolean deleted;
 	
+	@ToString.Exclude
 	@JsonIgnore
 	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name="eventId")
