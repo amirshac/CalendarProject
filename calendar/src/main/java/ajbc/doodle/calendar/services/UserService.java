@@ -54,20 +54,27 @@ public class UserService {
 	}
 	
 
+	/**
+	 * Logs the user in through submitted email
+	 * @param email
+	 * @param info
+	 * @throws DaoException
+	 * @throws CalendarException
+	 */
 	public void attemptLogIn(String email, UserLoginInfo info) throws DaoException, CalendarException {
 		System.out.println("attemptlogin email: " + email);
 		
 		User user = userDao.getUserByEmail(email);
 		
 		info.setUserId(user.getUserId());
-		//info.setLoginId(user.getUserId());
 		
 		user.setLoginInfo(info);
 		user.setLoggedIn(true);
 		
+		// updates user login info in DB
 		userDao.updateUser(user);
 		
-		// send logged in notification to user
+		// send logged in push notification to user
 		pushService.sendPushMessageToUser(info, new PushMessage("logged in", "Server push message: you are now logged in"));
 		
 	}
@@ -76,25 +83,12 @@ public class UserService {
 		System.out.println("attemptlogout email: " + email);
 		
 		User user = userDao.getUserByEmail(email);
-		
-//		UserLoginInfo info = user.getLoginInfo();
-//		pushService.sendPushMessageToUser(info, new PushMessage("logged out", "you are now logged out"));
 				
 		user.setLoginInfo(null);
 		user.setLoggedIn(false);
 		
+		// updates user logout info in DB
 		userDao.updateUser(user);
-	}
-	
-
-	// QUERIES
-	public boolean doesEmailExist(String email) {
-		try {
-			getUserByEmail(email);
-			return true;
-		}catch (DaoException e) {
-			return false;
-		}
 	}
 	
 	public void addEventToUser(int userId, Event event) throws DaoException {

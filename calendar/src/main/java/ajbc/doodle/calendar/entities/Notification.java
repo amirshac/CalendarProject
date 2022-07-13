@@ -2,11 +2,8 @@ package ajbc.doodle.calendar.entities;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -44,7 +40,7 @@ public class Notification implements Comparable<Notification>{
 	private Integer notificationId;
 	
 	@NonNull
-	private Integer eventId; // which event the notification belongs to
+	private Integer eventId;
 	@NonNull
 	private String title;
 	@NonNull

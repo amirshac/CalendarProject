@@ -23,7 +23,11 @@ import lombok.ToString;
 @Setter
 @Getter
 
-
+/**
+ * Saves user login information for communication with the server (encrypted push messages)
+ * @author amirs
+ *
+ */
 @Entity
 @Table(name = "UserLoginInfo")
 public class UserLoginInfo {

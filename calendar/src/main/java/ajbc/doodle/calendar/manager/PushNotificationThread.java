@@ -11,8 +11,6 @@ import java.net.http.HttpRequest.Builder;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.auth0.jwt.JWT;
 
 import ajbc.doodle.calendar.Application;
@@ -24,11 +22,12 @@ import ajbc.doodle.calendar.entities.UserLoginInfo;
 import ajbc.doodle.calendar.entities.webpush.PushMessage;
 import ajbc.doodle.calendar.services.NotificationService;
 
-
+/**
+ * Sends an encrypted push message to the user via thread
+ * @author amirs
+ *
+ */
 public class PushNotificationThread implements Runnable {
-//	@Autowired
-//	private PushService pushService;
-	
 	
 	private NotificationService notificationService;
 
@@ -45,6 +44,7 @@ public class PushNotificationThread implements Runnable {
 		this.notificationService = notificationService;
 
 	}
+	
 	@Override
 	public void run() {
 		try {
@@ -168,6 +168,7 @@ public class PushNotificationThread implements Runnable {
 		return true;
 	}
 	
+
 	private void deleteNotification() throws DaoException {
 		notificationService.deleteNotification(notification.getNotificationId());
 	}

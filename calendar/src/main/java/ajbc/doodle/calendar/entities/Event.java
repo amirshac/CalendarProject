@@ -58,8 +58,9 @@ public class Event {
 	private String title;
 	@NonNull
 	private LocalDateTime starting;
-	//@NonNull
+	
 	private LocalDateTime ending;
+	
 	@NonNull
 	private Boolean allDay;
 	@NonNull
@@ -92,5 +93,4 @@ public class Event {
 		notifications.add(notification);
 	}
 	
-	//TODO: event - guest list
 }

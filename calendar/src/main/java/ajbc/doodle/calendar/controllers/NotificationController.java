@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.entities.ErrorMessage;
-import ajbc.doodle.calendar.entities.Event;
 import ajbc.doodle.calendar.entities.Notification;
-import ajbc.doodle.calendar.entities.User;
-import ajbc.doodle.calendar.services.EventService;
 import ajbc.doodle.calendar.services.NotificationService;
-import ajbc.doodle.calendar.services.UserService;
 
 @RestController
 @RequestMapping("/notifications")
@@ -88,5 +83,4 @@ public class NotificationController {
 		}
 	}
 	
-	//TODO: hard deletes on entities
 }

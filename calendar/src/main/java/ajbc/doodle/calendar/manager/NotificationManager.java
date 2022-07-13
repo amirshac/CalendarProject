@@ -7,27 +7,19 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.PriorityBlockingQueue;
 
-import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import ajbc.doodle.calendar.CalendarException;
 import ajbc.doodle.calendar.PushProp;
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.entities.Event;
 import ajbc.doodle.calendar.entities.Notification;
 import ajbc.doodle.calendar.entities.User;
-import ajbc.doodle.calendar.entities.UserLoginInfo;
-import ajbc.doodle.calendar.entities.webpush.PushMessage;
 import ajbc.doodle.calendar.services.NotificationService;
-import ajbc.doodle.calendar.services.PushService;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
+//TODO: cleanup
 @Component
 
 public class NotificationManager {
@@ -35,8 +27,8 @@ public class NotificationManager {
 	@Autowired
 	private NotificationService notificationService;
 	
-	@Autowired
-	private PushService pushService;
+//	@Autowired
+//	private PushService pushService;
 
 	@Autowired
 	private PushProp pushProp;

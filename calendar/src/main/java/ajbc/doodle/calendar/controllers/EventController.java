@@ -87,5 +87,4 @@ public class EventController {
 		}
 	}
 	
-	//TODO: hard deletes on entities
 }

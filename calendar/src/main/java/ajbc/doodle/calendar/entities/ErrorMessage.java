@@ -12,9 +12,6 @@ import lombok.Setter;
 
 public class ErrorMessage extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2395926777293017518L;
 	
 	private String message;

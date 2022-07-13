@@ -19,5 +19,4 @@ public class DaoException extends Exception {
 		super(cause);
 	}
 
-	
 }

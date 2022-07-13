@@ -1,13 +1,10 @@
 package ajbc.doodle.calendar.aspects;
 
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 import ajbc.doodle.calendar.daos.DaoException;
-
 
 
 @Aspect

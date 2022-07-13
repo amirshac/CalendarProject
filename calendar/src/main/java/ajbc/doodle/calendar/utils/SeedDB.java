@@ -51,9 +51,6 @@ public class SeedDB {
 	
 	public void seedUsersTable() throws DaoException {
 		
-//		System.out.println("seedUserTables -> deleting users");
-//		userService.hardDeleteAllUsers();
-		
 		System.out.println("seeding users");
 
 		List<User> users = new ArrayList<>();

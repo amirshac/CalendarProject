@@ -2,13 +2,9 @@ package ajbc.doodle.calendar.daos;
 
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
 import ajbc.doodle.calendar.entities.Event;
-import ajbc.doodle.calendar.entities.User;
-
-
 
 @Transactional(rollbackFor = {DaoException.class}, readOnly = true)
 public interface EventDao {
@@ -26,7 +22,5 @@ public interface EventDao {
 	void deleteEvent(int eventId) throws DaoException;
 
 	List<Event> getAllEvents() throws DaoException;
-	
-	
 	
 }

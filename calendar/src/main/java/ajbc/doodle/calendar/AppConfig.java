@@ -1,7 +1,6 @@
 package ajbc.doodle.calendar;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import ajbc.doodle.calendar.entities.Event;
 import ajbc.doodle.calendar.entities.Notification;
@@ -30,7 +29,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 public class AppConfig {
 
-	private static final int INIT_SIZE = 10, MAX_SIZE = 100, MAX_WAIT = 500, MAX_IDLE = 50, MIN_IDLE = 2;
 	@Value("${user}")
 	private String user;
 	@Value("${password}")
@@ -45,10 +43,6 @@ public class AppConfig {
 	private String serverName;
 	@Value("${driver_class_name}")
 	private String driverClassName;
-	
-	//TODO: Appconfig - make seed db property from file work
-	@Value("${seed_db}")
-	public boolean seedDb;
 	
 
 	@Bean
@@ -77,7 +71,6 @@ public class AppConfig {
 		factory.setHibernateProperties(props);
 		return factory;
 	}
-	
 	
 	
 	@Bean
