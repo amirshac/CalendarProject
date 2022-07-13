@@ -1,9 +1,0 @@
-Works 
-
-Add user
-Update user
-Get user
-
-Cascades to user -> event -> notification
-Data saves into DB
-Including new table 'UsersEvents'
