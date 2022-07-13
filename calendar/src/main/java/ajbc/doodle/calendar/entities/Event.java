@@ -74,7 +74,7 @@ public class Event {
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	//@OneToMany(mappedBy = "eventId", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	@OneToMany(mappedBy = "eventId", cascade = { CascadeType.ALL })
+	@OneToMany(mappedBy = "eventId", cascade = { CascadeType.MERGE })
 	private List<Notification> notifications;
 	
 //	@JsonIgnore

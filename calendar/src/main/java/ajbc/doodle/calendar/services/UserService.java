@@ -77,7 +77,6 @@ public class UserService {
 		
 		User user = userDao.getUserByEmail(email);
 		
-//		// send logged in notification to user
 //		UserLoginInfo info = user.getLoginInfo();
 //		pushService.sendPushMessageToUser(info, new PushMessage("logged out", "you are now logged out"));
 				
@@ -103,4 +102,5 @@ public class UserService {
 		user.addEvent(event);
 		this.updateUser(user);
 	}	
+	
 }

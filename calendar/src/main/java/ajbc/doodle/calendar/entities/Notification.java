@@ -5,12 +5,16 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,6 +43,7 @@ public class Notification implements Comparable<Notification>{
 	private Integer notificationId;
 	
 	@NonNull
+	@Column(insertable=false, updatable=false)
 	private Integer eventId; // which event the notification belongs to
 	@NonNull
 	private String title;
@@ -58,6 +63,11 @@ public class Notification implements Comparable<Notification>{
 	private LocalDateTime alertTime;
 	
 	private Boolean deleted;
+	
+	@JsonIgnore
+	@ManyToOne(cascade = {CascadeType.MERGE})
+	@JoinColumn(name="eventId")
+	private Event event;
 	
 	@Override
 	public int compareTo(Notification otherNotification) {
