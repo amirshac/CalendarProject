@@ -1,8 +1,5 @@
-//TODO: go over this
 package ajbc.doodle.calendar.controllers;
 
-import java.net.http.HttpClient;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,15 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import ajbc.doodle.calendar.CalendarException;
-import ajbc.doodle.calendar.ServerKeys;
+import ajbc.doodle.calendar.PushProp;
 import ajbc.doodle.calendar.daos.DaoException;
 import ajbc.doodle.calendar.entities.UserLoginInfo;
 import ajbc.doodle.calendar.entities.webpush.Subscription;
 import ajbc.doodle.calendar.entities.webpush.SubscriptionEndpoint;
-import ajbc.doodle.calendar.services.CryptoService;
 import ajbc.doodle.calendar.services.PushService;
 import ajbc.doodle.calendar.services.UserService;
 
@@ -34,37 +28,18 @@ public class PushController {
 	@Autowired
 	private PushService pushService;
 	
-	private final ServerKeys serverKeys;
-
-	private final CryptoService cryptoService;
-
-	private final HttpClient httpClient;
-
-	private final Algorithm jwtAlgorithm;
-
-	private final ObjectMapper objectMapper;
+	@Autowired 
+	private PushProp pushProp;
 	
-	private Set<String> currentEndPoints;
-
-
-	public PushController(ServerKeys serverKeys, CryptoService cryptoService, ObjectMapper objectMapper) {
-		this.serverKeys = serverKeys;
-		this.cryptoService = cryptoService;
-		this.httpClient = HttpClient.newHttpClient();
-		this.objectMapper = objectMapper;
-
-		this.jwtAlgorithm = Algorithm.ECDSA256(this.serverKeys.getPublicKey(), this.serverKeys.getPrivateKey());
-		
-	}
 
 	@GetMapping(path = "publicSigningKey", produces = "application/octet-stream")
 	public byte[] publicSigningKey() {
-		return this.serverKeys.getPublicKeyUncompressed();
+		return pushProp.getServerKeys().getPublicKeyUncompressed();
 	}
 
 	@GetMapping(path = "/publicSigningKeyBase64")
 	public String publicSigningKeyBase64() {
-		return this.serverKeys.getPublicKeyBase64();
+		return pushProp.getServerKeys().getPublicKeyBase64();
 	}
 
 	@PostMapping("subscribe/{email}")
@@ -95,7 +70,6 @@ public class PushController {
 			System.out.println(subscription.getEndpoint());
 			userService.attemptLogout(email, subscription.getEndpoint());
 
-			// this.subscriptions.remove(subscription.getEndpoint(), subscription);
 			pushService.removeUserFromMap(email);
 
 			System.out.println("Subscription with email " + email + " got removed!");
@@ -103,13 +77,6 @@ public class PushController {
 			System.out.println(e);
 		}
 
-	}
-
-	// TODO: fix to contain email string
-	@PostMapping("isSubscribed")
-	public boolean isSubscribed(@RequestBody SubscriptionEndpoint subscription) {
-		//return this.subscriptions.containsKey(subscription.getEndpoint());
-		return false;
 	}
 
 }

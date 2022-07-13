@@ -10,6 +10,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ajbc.doodle.calendar.services.CryptoService;
 import lombok.Getter;
 
+/**
+ * Stores push properties for message encryption
+ * @author amirs
+ *
+ */
 @Getter
 @Component
 public class PushProp {
