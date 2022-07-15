@@ -1,0 +1,57 @@
+package ajbc.doodle.calendar.manager;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import ajbc.doodle.calendar.CalendarException;
+import ajbc.doodle.calendar.daos.DaoException;
+import ajbc.doodle.calendar.entities.Notification;
+import ajbc.doodle.calendar.entities.UserLoginInfo;
+import ajbc.doodle.calendar.entities.webpush.PushMessage;
+import ajbc.doodle.calendar.services.NotificationService;
+import ajbc.doodle.calendar.services.PushService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class PushNotificationThread implements Runnable {
+	@Autowired
+	private PushService pushService;
+	
+	@Autowired
+	private NotificationService notificationService;
+
+	@NonNull
+	private UserLoginInfo loginInfo;
+
+	@NonNull
+	private Notification notification;
+
+	@Override
+	public void run() {
+		try {
+			sendPushNotification();
+			deleteNotification();
+			
+		} catch (CalendarException e) {
+			e.printStackTrace();
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void sendPushNotification() throws CalendarException {
+		String msgTitle = "PushMessage: ";
+		String msgString = notification.getTitle() + " " + notification.getMessage();
+		
+		System.out.println("<push thread> sending notification: "+ msgString);
+		
+		System.out.println(pushService);
+		
+		pushService.sendPushMessageToUser(loginInfo, new PushMessage(msgTitle, msgString));
+	}
+	
+	private void deleteNotification() throws DaoException {
+		notificationService.deleteNotification(notification.getNotificationId());
+	}
+	
+}

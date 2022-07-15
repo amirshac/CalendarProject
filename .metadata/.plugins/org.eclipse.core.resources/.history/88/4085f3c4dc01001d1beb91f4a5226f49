@@ -1,0 +1,8 @@
+package ajbc.doodle.calendar;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class CalendarException extends Exception {
+
+}

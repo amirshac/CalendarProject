@@ -1,0 +1,5 @@
+package ajbc.doodle.calendar;
+
+public class CalendarException {
+
+}

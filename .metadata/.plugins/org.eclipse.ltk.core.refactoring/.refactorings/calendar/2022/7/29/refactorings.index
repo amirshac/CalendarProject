@@ -1,0 +1,19 @@
+1657451253058	Rename local variable 'Logininfo'
+1657477397449	Copy compilation unit
+1657478020405	Rename method 'getEvent'
+1657522565814	Copy compilation unit
+1657523039399	Rename field 'notService'
+1657527239112	Rename field 'notDao'
+1657527281729	Rename method 'getNotification'
+1657621861440	Move compilation unit
+1657621876308	Move compilation unit
+1657621976957	Copy package
+1657622026943	Delete element
+1657623892203	Rename method 'sendPushMessageToEmail'
+1657624079684	Rename field 'emailNotifications'
+1657633661332	Rename method 'sendPushMessageToUsersLogin'
+1657641930149	Delete element
+1657649111347	Copy package
+1657649118041	Delete element
+1657660094220	Rename field 'notifications'
+1657733147337	Move compilation unit

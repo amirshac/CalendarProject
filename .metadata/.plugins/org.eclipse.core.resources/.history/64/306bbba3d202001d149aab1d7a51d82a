@@ -1,0 +1,81 @@
+package ajbc.doodle.calendar.manager;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import ajbc.doodle.calendar.CalendarException;
+import ajbc.doodle.calendar.PushProp;
+import ajbc.doodle.calendar.daos.DaoException;
+import ajbc.doodle.calendar.entities.Notification;
+import ajbc.doodle.calendar.entities.UserLoginInfo;
+import ajbc.doodle.calendar.entities.webpush.PushMessage;
+import ajbc.doodle.calendar.services.NotificationService;
+import ajbc.doodle.calendar.services.PushService;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class PushNotificationThread implements Runnable {
+	@Autowired
+	private PushService pushService;
+	
+	@Autowired
+	private NotificationService notificationService;
+
+	@NonNull
+	private UserLoginInfo loginInfo;
+
+	@NonNull
+	private PushProp pushProp;
+	
+	@NonNull
+	private Notification notification;
+
+	@Override
+	public void run() {
+		try {
+			sendPushNotification();
+			deleteNotification();
+			
+		} catch (CalendarException e) {
+			e.printStackTrace();
+		} catch (DaoException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void sendPushNotification() throws CalendarException {
+		String msgTitle = "PushMessage: ";
+		String msgString = notification.getTitle() + " " + notification.getMessage();
+		
+		System.out.println("<push thread> sending notification: "+ msgString);
+		
+		System.out.println(pushService.toString());
+		
+		pushService.sendPushMessageToUser(loginInfo, new PushMessage(msgTitle, msgString));
+	}
+	
+	/**
+	 * Encrypts message into byte array using user's encryption keys in userlogininfo
+	 * @param message
+	 * @param loginInfo
+	 * @return
+	 * @throws CalendarException
+	 */
+	private byte[] encryptMessage(Object message, UserLoginInfo loginInfo) throws CalendarException {
+		byte[] encryptedMessage = null;
+		try {
+			encryptedMessage = pushProp.getCryptoService().encrypt(pushProp.getObjectMapper().writeValueAsString(message),
+			loginInfo.getP256dhKey(), loginInfo.getAuth(), 0);
+		} catch (Exception e) {
+			throw new CalendarException("Can't encrypt message " + e.getMessage());
+		}
+		
+		return encryptedMessage;
+	}
+	
+	
+	private void deleteNotification() throws DaoException {
+		notificationService.deleteNotification(notification.getNotificationId());
+	}
+	
+}

@@ -1,0 +1,5 @@
+package ajbc.doodle.calendar.enums.copy;
+
+public enum RepeatingOptions {
+	NONE, DAILY, WEEKLY
+}

@@ -1,0 +1,8 @@
+package ajbc.doodle.calendar.manager;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class PushNotificationThread implements Runnable {
+	@Autowired
+	private PushService pushService;
+}

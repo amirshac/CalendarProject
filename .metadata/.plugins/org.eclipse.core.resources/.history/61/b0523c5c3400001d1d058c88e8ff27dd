@@ -1,0 +1,38 @@
+package ajbc.doodle.calendar.entities;
+
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@ToString
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Setter
+@Getter
+
+
+@Entity
+@Table(name = "UsersLoginInfo")
+public class UserLoginInfo {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int loginId;
+	
+	private String email;
+	private String endPoint;
+	private String p256dhKey;
+	private String auth;	
+}
